@@ -1,21 +1,26 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(bool isFakeMode, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     connect(&mTimer, &QTimer::timeout, this, &MainWindow::onTimer);
 
+    mIsFakeMode = isFakeMode;
+
     imgFramePhaseA = NULL;
     imgFramePhaseB = NULL;
     imgFramePhaseC = NULL;
 
+    mIsPositionUpdated = false;
+    mTimer.start(10);
 
-    initCamera();
-
-    mTimer.start(33);
+    // Camera position aquisition
+    mCameraWorker = new CameraWorker(mIsFakeMode, this);
+    connect(mCameraWorker, &CameraWorker::newPosition, this, &MainWindow::onCameraNewPosition);
+    mCameraWorker->start();
 }
 
 MainWindow::~MainWindow()
@@ -34,8 +39,57 @@ void MainWindow::updateFrameLabel(Mat &frame, QLabel *label, QImage *image)
     label->setPixmap(pixmap);
 }
 
+void MainWindow::onCameraNewPosition(int x, int y)
+{
+
+    mMutexPoisition.lock();
+
+    mFrame = getFrameROI();
+    mFramePhaseB = getFrameDebugBalance();
+    mFramePhaseC = getFrameDebug();
+    mIsPositionUpdated = true;
+
+    mMutexPoisition.unlock();
+
+    /*
+    Mat frame = getFrameROI();
+    updateFrameLabel(frame, ui->labelFramePhaseA, imgFramePhaseA);
+
+    Mat framePhaseB = getFrameDebugBalance();
+    updateFrameLabel(framePhaseB, ui->labelFramePhaseB, imgFramePhaseB);
+
+    Mat framePhaseC = getFrameDebug();
+    updateFrameLabel(framePhaseC, ui->labelFramePhaseC, imgFramePhaseC);
+    */
+}
+
 void MainWindow::onTimer()
 {
+    bool updatedRequired = false;
+    Mat frame;
+    Mat framePhaseB;
+    Mat framePhaseC;
+
+    mMutexPoisition.lock();
+
+    updatedRequired = mIsPositionUpdated;
+    mIsPositionUpdated = false;
+
+    if(updatedRequired){
+        frame = mFrame;
+        framePhaseB = mFramePhaseB;
+        framePhaseC = mFramePhaseC;
+    }
+
+    mMutexPoisition.unlock();
+
+    if (updatedRequired){
+        updateFrameLabel(frame, ui->labelFramePhaseA, imgFramePhaseA);
+        updateFrameLabel(framePhaseB, ui->labelFramePhaseB, imgFramePhaseB);
+        updateFrameLabel(framePhaseC, ui->labelFramePhaseC, imgFramePhaseC);
+    }
+
+    /*
     bool isNewFrame = acqFrameFromCamera();
     if( isNewFrame){
 
@@ -49,6 +103,8 @@ void MainWindow::onTimer()
 
         Mat framePhaseC = getFrameDebug();
         updateFrameLabel(framePhaseC, ui->labelFramePhaseC, imgFramePhaseC);
-
     }
+    */
 }
+
+

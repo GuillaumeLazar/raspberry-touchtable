@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     if (isMonitorMode){
         QApplication app(argc, argv);
-        MainWindow w;
+        MainWindow w(isfakeMode);
         w.show();
         return app.exec();
 

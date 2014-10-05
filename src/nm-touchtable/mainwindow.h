@@ -5,8 +5,10 @@
 
 #include <QTimer>
 #include <QLabel>
+#include <QMutex>
 
 #include "camera.h"
+#include "cameraworker.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,11 +19,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(bool isFakeMode, QWidget *parent = 0);
     ~MainWindow();
 
 private:
-    void updateFrameLabel(Mat &frame, QLabel *label, QImage *image);
+    void updateFrameLabel(Mat &mFrame, QLabel *label, QImage *image);
 
     Ui::MainWindow *ui;
 
@@ -31,9 +33,19 @@ private:
     QImage *imgFramePhaseB;
     QImage *imgFramePhaseC;
 
+    Mat mFrame;
+    Mat mFramePhaseB;
+    Mat mFramePhaseC;
+
+    CameraWorker *mCameraWorker;
+    QMutex mMutexPoisition;
+    bool mIsPositionUpdated;
+    bool mIsFakeMode;
+
 
 public slots:
     void onTimer();
+    void onCameraNewPosition(int x, int y);
 };
 
 #endif // MAINWINDOW_H
