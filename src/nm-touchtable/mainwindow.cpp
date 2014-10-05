@@ -50,17 +50,6 @@ void MainWindow::onCameraNewPosition(int x, int y)
     mIsPositionUpdated = true;
 
     mMutexPoisition.unlock();
-
-    /*
-    Mat frame = getFrameROI();
-    updateFrameLabel(frame, ui->labelFramePhaseA, imgFramePhaseA);
-
-    Mat framePhaseB = getFrameDebugBalance();
-    updateFrameLabel(framePhaseB, ui->labelFramePhaseB, imgFramePhaseB);
-
-    Mat framePhaseC = getFrameDebug();
-    updateFrameLabel(framePhaseC, ui->labelFramePhaseC, imgFramePhaseC);
-    */
 }
 
 void MainWindow::onTimer()
@@ -88,23 +77,6 @@ void MainWindow::onTimer()
         updateFrameLabel(framePhaseB, ui->labelFramePhaseB, imgFramePhaseB);
         updateFrameLabel(framePhaseC, ui->labelFramePhaseC, imgFramePhaseC);
     }
-
-    /*
-    bool isNewFrame = acqFrameFromCamera();
-    if( isNewFrame){
-
-        processFrame(0, 0);
-
-        Mat frame = getFrameROI();
-        updateFrameLabel(frame, ui->labelFramePhaseA, imgFramePhaseA);
-
-        Mat framePhaseB = getFrameDebugBalance();
-        updateFrameLabel(framePhaseB, ui->labelFramePhaseB, imgFramePhaseB);
-
-        Mat framePhaseC = getFrameDebug();
-        updateFrameLabel(framePhaseC, ui->labelFramePhaseC, imgFramePhaseC);
-    }
-    */
 }
 
 

@@ -31,6 +31,7 @@ Window {
         color: "red"
         x: window1.width / 2
         y: window1.height / 2
+        visible: true
 
     }
 

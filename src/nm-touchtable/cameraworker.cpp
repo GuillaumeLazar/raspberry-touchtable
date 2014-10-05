@@ -54,6 +54,6 @@ void CameraWorker::run()
         // 33   : 76% : emitter fluide : cursor slow
         // 25   : 78% : emitter fluide : cursor slow
         // none :
-        //msleep(25);
+        msleep(1);
     }
 }

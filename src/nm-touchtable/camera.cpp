@@ -68,9 +68,9 @@ void processFrame(int, void*)
 {
 
 
-    int BLUR_SIZE = 3;           // 7
+    int BLUR_SIZE = 3;           // 3
     double BLUR_SIGMA = 1.5;     //1.5
-    int THRESHOLD_SIZE = 15;     //15
+    int THRESHOLD_SIZE = 9;     //15  //10 ko
     int THRESHOLD_C = -8;        //-8
 
 
