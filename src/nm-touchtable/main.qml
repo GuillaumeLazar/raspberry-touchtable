@@ -1,7 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Window 2.1
 import QtQuick.Particles 2.0
-//import CustomImage 1.0
+import CustomImage 1.0
 
 Window {
     id: window1
@@ -23,40 +23,49 @@ Window {
         enabled: true
     }
 
+    Rectangle {
+        id: cursor
+        objectName: "cursor"
+        width: 32
+        height: 32
+        color: "red"
+        x: window1.width / 2
+        y: window1.height / 2
+
+    }
+
     ParticleSystem {
         id: root
         anchors.fill: parent
 
-
-
         Emitter {
-
-
             id: emitter
-            objectName: "rect"
+            objectName: "emitter"
             x: window1.width / 2
             y: window1.height / 2
             width: 50
             height: 50
-            emitRate: globalEmitRate
+            emitRate: globalEmitRate //globalEmitRate
             lifeSpan: 4000 //8000
             size: 24
             sizeVariation: 16
             velocity: PointDirection {x: root.width/10; y: root.height/10;}
             acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
-
-
         }
 
+
         Timer {
-            interval: 100; running: true; repeat: true;
+            interval: 25; running: false; repeat: true;
             onTriggered: {
                 if (newX > 0){
-                    emitter.emitRate = globalEmitRate;
-                    emitter.x = newX;
-                    emitter.y = newY;
+                    //emitter.emitRate = globalEmitRate;
+                    //emitter.x = newX;
+                    //emitter.y = newY;
+
+                    //cursor.x = newX;
+                    //cursor.y = newY;
                 }else{
-                    emitter.emitRate = 0;
+                    //emitter.emitRate = 0;
                 }
             }
         }

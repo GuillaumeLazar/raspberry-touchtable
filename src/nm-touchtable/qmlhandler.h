@@ -20,15 +20,18 @@ private:
     QQmlApplicationEngine engine;
     QTimer mTimer;
 
-    QObject *rect;
-    QObject *rectText;
-    QObject *framePreview;
+    QObject *cursor;
+    QObject *emitter;
     QObject *qmlWindow;
-    CustomImage *customImageFrame;
-    CustomImage *customImageFrameRoi;
-    CustomImage *customImageFrameDebug;
+
+    //CustomImage *customImageFrame;
+    //CustomImage *customImageFrameRoi;
+    //CustomImage *customImageFrameDebug;
+
     bool isCameraFound;
     bool mIsFakeMode;
+
+    int mCptUpdate;
 
 
 

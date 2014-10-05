@@ -17,12 +17,23 @@ vector<Rect>* getBoundRect();
 int getBoundCount();
 Mat getFrame();
 Mat getFrameROI();
+Mat getFrameDebug();
+Mat getFrameDebugBalance();
 
+static int frameCpt = 0;
+static bool isFakeMode;
+static bool isBalanceDone = false;
 static VideoCapture cap;
 static Mat frame;
 static Mat frameGray;
 static Mat frameROI;
 static Mat frameBlur;
+
+static Mat frameDebug;
+static Mat frameDebugRoi;
+static Mat frameDebugBalance;
+
+static Mat frameBalance;
 
 static Mat frameCrop;
 static vector<Rect> boundRect;

@@ -2,12 +2,16 @@ TEMPLATE = app
 
 QT += qml quick
 
+QT += gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 TARGET = nm-touchtable
 
 SOURCES += main.cpp \
     camera.cpp \
     qmlhandler.cpp \
-    customimage.cpp
+    customimage.cpp \
+    mainwindow.cpp
 
 RESOURCES += qml.qrc
 
@@ -24,7 +28,8 @@ include(deployment.pri)
 HEADERS += \
     camera.h \
     qmlhandler.h \
-    customimage.h
+    customimage.h \
+    mainwindow.h
 
 
 raspi {
@@ -36,3 +41,6 @@ raspi {
 }else {
     LIBS += `pkg-config opencv --libs`
 }
+
+FORMS += \
+    mainwindow.ui

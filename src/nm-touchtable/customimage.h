@@ -4,6 +4,7 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QImage>
 #include <QPainter>
+#include <QMutex>
 
 class CustomImage : public QQuickPaintedItem
 {
@@ -21,6 +22,9 @@ public:
 
 private:
     QImage *mImage;
+    QImage *mImageDoubleBuffer;
+    bool mIsPainted;
+    QMutex mMutex;
 
 };
 
