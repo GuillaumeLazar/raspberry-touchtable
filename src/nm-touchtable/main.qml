@@ -21,10 +21,12 @@ Window {
         id: visualItem1
         objectName: "visualItem1"
         anchors.fill: parent
-
         emitter_x: mouseArea.mouseX
         emitter_y: mouseArea.mouseY
         emitter_emitRate: mouseArea.pressed ? 100 : 0
+//        emitter_x: 0
+//        emitter_y: 0
+//        emitter_emitRate: 0
     }
 
     VisualItem{
@@ -103,11 +105,10 @@ Window {
         Rectangle {
             id: testButtonDrag
             x: 320
-            y: 0
+            y: 7
             width: 150
             height: 40
             color: "#9d9999"
-            anchors.verticalCenter: parent.verticalCenter
             z: 5
             border.color: "#000000"
 

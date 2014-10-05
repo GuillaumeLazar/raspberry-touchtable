@@ -52,19 +52,19 @@ QmlHandler::QmlHandler(bool isFakeMode)
 
 void QmlHandler::onTouchPress(int x, int y)
 {
-    qDebug() <<  "\nonTouchPress: " << x << " x " << y;
+    //qDebug() <<  "\nonTouchPress: " << x << " x " << y;
     QTest::mousePress((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
 }
 
 void QmlHandler::onTouchMove(int x, int y)
 {
-    qDebug() <<  "...onTouchMove: " << x << " x " << y;
+    //qDebug() <<  "...onTouchMove: " << x << " x " << y;
     QTest::mouseMove((QWindow*)qmlWindow, QPoint(x, y));
 }
 
 void QmlHandler::onTouchRelease(int x, int y)
 {
-    qDebug() <<  "onTouchRelease: " << x << " x " << y;
+    //qDebug() <<  "onTouchRelease: " << x << " x " << y;
     QTest::mouseRelease((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
 }
 
@@ -72,12 +72,12 @@ void QmlHandler::onCameraNewFrame(vector<Rect>* objects)
 {
     textinfo->setProperty("text", QString("objects count: %1").arg(objects->size()));
 
-    // first (i=0) is processed by mouse way
+    // first is processed by mouse way
     for (int i = 1; i < listVisualItems.size(); ++i) {
 
         QObject *visualItem = listVisualItems.at(i);
 
-        if (objects->size() > i + 1){
+        if (objects->size() > i){
             Rect objectBounds = objects->at(i);
 
             updateVisualItem(visualItem, true, &objectBounds);
