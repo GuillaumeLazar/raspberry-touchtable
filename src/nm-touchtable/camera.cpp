@@ -68,9 +68,9 @@ void processFrame(int, void*)
 {
 
 
-    int BLUR_SIZE = 3;           // 3
-    double BLUR_SIGMA = 1.5;     //1.5
-    int THRESHOLD_SIZE = 9;     //15  //10 ko
+    int BLUR_SIZE = 1;           // 3
+    double BLUR_SIGMA = 0;     //1.5
+    int THRESHOLD_SIZE = 15;     //15  //10 ko
     int THRESHOLD_C = -8;        //-8
 
 
@@ -84,7 +84,7 @@ void processFrame(int, void*)
     frameROI = frameGray(roi).clone();
 
     //DEBUG
-    //resize(frameROI, frameDebugRoi, Size(320, 240));
+    resize(frameROI, frameDebugRoi, Size(320, 240));
 
     //printf("isBalanceDone  = %d\n", isBalanceDone);
     if (!isBalanceDone ){
@@ -122,7 +122,7 @@ void processFrame(int, void*)
     absdiff(frameROI, frameBalance, frameROI);
 
     // DEBUG
-    //resize(frameROI, frameDebugBalance, Size(320, 240));
+    resize(frameROI, frameDebugBalance, Size(320, 240));
 
     // binary
     adaptiveThreshold(frameROI, frameROI, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, THRESHOLD_SIZE, THRESHOLD_C);
@@ -133,7 +133,7 @@ void processFrame(int, void*)
     //dilate(frameROI, frameROI, dummyMat, Point(-1, -1), 1);
 
     // DEBUG
-    //resize(frameROI, frameDebug, Size(320, 240));
+    resize(frameROI, frameDebug, Size(320, 240));
 
     // resize
     resize(frameROI, frameROI, Size(320, 240));

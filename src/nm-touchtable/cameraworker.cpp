@@ -11,18 +11,16 @@ CameraWorker::CameraWorker(bool isFakeMode, QObject *parent) :
 
 void CameraWorker::run()
 {
-
-    qDebug() << "CameraWorker::run() : init";
+    // initialization
     if (!mIsFakeMode){
         initCamera();
     }else{
         initFakeCamera();
     }
-    qDebug() << "CameraWorker::run() : init......[done]";
 
+    // main loop
     while(1){
 
-        //qDebug() << "CameraWorker::run()... do it!";
         bool isNewFrame = false;
         isNewFrame = acqFrameFromCamera();
 
@@ -58,6 +56,8 @@ void CameraWorker::run()
                       emit touchRelease(mTouchX, mTouchY);
                   }
              }
+
+             emit newFrame();
         }
 
         // 1000 : 53% : emitter fluide

@@ -19,7 +19,7 @@ MainWindow::MainWindow(bool isFakeMode, QWidget *parent) :
 
     // Camera position aquisition
     mCameraWorker = new CameraWorker(mIsFakeMode, this);
-    connect(mCameraWorker, &CameraWorker::newPosition, this, &MainWindow::onCameraNewPosition);
+    connect(mCameraWorker, &CameraWorker::newFrame, this, &MainWindow::onCameraNewFrame);
     mCameraWorker->start();
 }
 
@@ -39,7 +39,7 @@ void MainWindow::updateFrameLabel(Mat &frame, QLabel *label, QImage *image)
     label->setPixmap(pixmap);
 }
 
-void MainWindow::onCameraNewPosition(int x, int y)
+void MainWindow::onCameraNewFrame()
 {
 
     mMutexPoisition.lock();

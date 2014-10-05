@@ -14,7 +14,7 @@ Window {
 
     property int newX : -1
     property int newY : -1
-    property int globalEmitRate : 400 //400
+    property int globalEmitRate : 100 //400
 
     MouseArea {
         id: mouseArea
@@ -196,6 +196,44 @@ Window {
 
             onReleased: {
                   testButton.color = "#9d9999"
+                testButtonDrag.x = 320;
+                    testButtonDrag.y = 0;
+              }
+        }
+    }
+
+
+    Rectangle {
+        id: testButtonDrag
+        x: 320
+        y: 0
+        width: 150
+        height: 40
+        color: "#9d9999"
+        border.color: "#000000"
+
+        Text {
+            text: "Drag me"
+            anchors.fill: parent
+            styleColor: "#000000"
+            anchors.top: parent.top
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 12
+        }
+
+        MouseArea {
+            anchors.fill: parent
+
+            drag.target: parent
+            drag.axis: Drag.XandYAxis
+
+            onPressed: {
+                  testButtonDrag.color = "#ff0000"
+              }
+
+            onReleased: {
+                  testButtonDrag.color = "#9d9999"
               }
         }
     }
