@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     camera.cpp \
     qmlhandler.cpp \
     customimage.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    cameraworker.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,7 +30,8 @@ HEADERS += \
     camera.h \
     qmlhandler.h \
     customimage.h \
-    mainwindow.h
+    mainwindow.h \
+    cameraworker.h
 
 
 raspi {

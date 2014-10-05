@@ -4,9 +4,11 @@
 #include <QQmlApplicationEngine>
 #include <QObject>
 #include <QTimer>
+#include <QMutex>
 
 #include "camera.h"
 #include "customimage.h"
+#include "cameraworker.h"
 
 
 class QmlHandler : public QObject
@@ -33,10 +35,18 @@ private:
 
     int mCptUpdate;
 
+    CameraWorker *mCameraWorker;
+
+    int mPositionX;
+    int mPositionY;
+    bool mIsPositionUpdated;
+    QMutex mMutexPoisition;
+
 
 
 public slots:
     void onTimer();
+    void onCameraNewPosition(int x, int y);
 };
 
 #endif // QMLHANDLER_H

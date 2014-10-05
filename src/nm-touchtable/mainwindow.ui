@@ -75,7 +75,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(20, 0, 10);</string>
+     <string notr="true">background-color: rgb(101, 101, 101);</string>
     </property>
     <property name="text">
      <string/>

@@ -14,7 +14,7 @@ Window {
 
     property int newX : -1
     property int newY : -1
-    property int globalEmitRate : 40 //400
+    property int globalEmitRate : 400 //400
 
     FPSMonitor {
         id: fpsMonitor
@@ -41,8 +41,10 @@ Window {
         Emitter {
             id: emitter
             objectName: "emitter"
-            x: window1.width / 2
-            y: window1.height / 2
+            //x: window1.width / 2
+            //y: window1.height / 2
+            x: 0
+            y: 0
             width: 50
             height: 50
             emitRate: globalEmitRate //globalEmitRate

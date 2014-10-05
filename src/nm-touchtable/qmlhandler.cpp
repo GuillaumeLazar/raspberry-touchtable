@@ -18,86 +18,51 @@ QmlHandler::QmlHandler(bool isFakeMode)
 
     mCptUpdate = 0;
 
+    mIsPositionUpdated = false;
+    mPositionX = 0;
+    mPositionY = 0;
 
-    // 40 : rect moyen / emitter ok
-    // 35 : rect moyen / emitter ok
-    // 33 : rect ok / emitter KO
-    // 25 : rect ok / emitter slow
-    int timerInterval = 33;
+    // QML timer
+    mTimer.start(10);
 
-    if (!mIsFakeMode){
+    // Camera position aquisition
+    mCameraWorker = new CameraWorker(mIsFakeMode, this);
+    connect(mCameraWorker, &CameraWorker::newPosition, this, &QmlHandler::onCameraNewPosition);
+    mCameraWorker->start();
+}
 
-        isCameraFound = initCamera();
-
-        if (isCameraFound){
-            // 100ms -> 54% CPU
-            // 100ms -> 67% CPU
-            mTimer.start(timerInterval);
-        }
-    }else{
-
-        isCameraFound = initFakeCamera();
-
-        if(!isCameraFound){
-            qmlWindow->setProperty("newX", 1280/2);
-            qmlWindow->setProperty("newY", 800/2);
-        }
-
-        mTimer.start(timerInterval);
-    }
+void QmlHandler::onCameraNewPosition(int x, int y)
+{
+    //printf("onCameraNewPosition(%d; %d) \n", x, y);
+    mMutexPoisition.lock();
+    mIsPositionUpdated = true;
+    mPositionX = x;
+    mPositionY = y;
+    mMutexPoisition.unlock();
 }
 
 void QmlHandler::onTimer()
 {
-    //printf("onTimer() \n");
-    bool isNewFrame = acqFrameFromCamera();
+    int x = 0;
+    int y = 0;
+    bool positionUpdated = false;
 
-    if( isNewFrame){
+    mMutexPoisition.lock();
 
-        mCptUpdate++;
+    positionUpdated = mIsPositionUpdated;
+    x = mPositionX;
+    y = mPositionY;
+    mIsPositionUpdated = false;
 
-        if (mCptUpdate >= 0){
-            mCptUpdate = 0;
+    mMutexPoisition.unlock();
 
-            //printf("---> processFrame()\n");
-            processFrame(0, 0);
+    if (positionUpdated){
 
+        cursor->setProperty("x", x);
+        cursor->setProperty("y", y);
 
-            //---------------------------------------
-            //find objects
-            int objectsCount = getBoundCount();
-            vector<Rect>* objects = getBoundRect();
-
-            if (objectsCount > 0){
-                Rect objectBounds = objects->at(0);
-
-                float xRatio = 4.0f;
-                float yRatio = 3.33f;
-
-                int objCenterX = objectBounds.x + objectBounds.width/2.0;
-                int objCenterY = objectBounds.y + objectBounds.height/2.0;
-
-                cursor->setProperty("x", (int)(objCenterX * xRatio));
-                cursor->setProperty("y", (int)(objCenterY * yRatio));
-
-                emitter->setProperty("x", (int)(objCenterX * xRatio));
-                emitter->setProperty("y", (int)(objCenterY * yRatio));
-
-                emitter->setProperty("emitRate", 40);
-
-
-                //qmlWindow->setProperty("newX", (int)(objCenterX * xRatio));
-                //qmlWindow->setProperty("newY", (int)(objCenterY * yRatio));
-
-            }else{
-                //qmlWindow->setProperty("newX", -1);
-                //qmlWindow->setProperty("newY", -1);
-
-                emitter->setProperty("emitRate", 0);
-            }
-
-        }
-
+        emitter->setProperty("x", x);
+        emitter->setProperty("y", y);
     }
 }
 
