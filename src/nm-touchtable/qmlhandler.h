@@ -46,8 +46,12 @@ private:
 
 
 public slots:
-    void onTimer();
-    void onCameraNewPosition(int x, int y);
+    //void onTimer();
+    //void onCameraNewPosition(int x, int y);
+
+    void onTouchPress(int x, int y);
+    void onTouchMove(int x, int y);
+    void onTouchRelease(int x, int y);
 };
 
 #endif // QMLHANDLER_H

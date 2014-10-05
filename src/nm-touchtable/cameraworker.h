@@ -17,9 +17,16 @@ public:
 
 private:
     bool mIsFakeMode;
+    bool mIsTouchPressed;
+    int mTouchX;
+    int mTouchY;
 
 signals:  
     void newPosition(int x, int y);
+
+    void touchPress(int x, int y);
+    void touchRelease(int x, int y);
+    void touchMove(int x, int y);
 
 public slots:
 

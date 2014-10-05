@@ -6,7 +6,7 @@
 QmlHandler::QmlHandler(bool isFakeMode)
 {
     mIsFakeMode = isFakeMode;
-    connect(&mTimer, &QTimer::timeout, this, &QmlHandler::onTimer);
+    //connect(&mTimer, &QTimer::timeout, this, &QmlHandler::onTimer);
 
     qmlRegisterType<CustomImage>("CustomImage", 1, 0, "CustomImage");
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
@@ -25,17 +25,38 @@ QmlHandler::QmlHandler(bool isFakeMode)
     mPositionX = 0;
     mPositionY = 0;
 
-    if (!mIsFakeMode){
-        // QML timer
-        mTimer.start(10);
-    }
+    // QML timer
+    //mTimer.start(10);
+
 
     // Camera position aquisition
     mCameraWorker = new CameraWorker(mIsFakeMode, this);
-    connect(mCameraWorker, &CameraWorker::newPosition, this, &QmlHandler::onCameraNewPosition);
+    //connect(mCameraWorker, &CameraWorker::newPosition, this, &QmlHandler::onCameraNewPosition);
+    connect(mCameraWorker, &CameraWorker::touchPress, this, &QmlHandler::onTouchPress);
+    connect(mCameraWorker, &CameraWorker::touchMove, this, &QmlHandler::onTouchMove);
+    connect(mCameraWorker, &CameraWorker::touchRelease, this, &QmlHandler::onTouchRelease);
     mCameraWorker->start();
 }
 
+void QmlHandler::onTouchPress(int x, int y)
+{
+    qDebug() <<  "\nonTouchPress: " << x << " x " << y;
+    QTest::mousePress((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
+}
+
+void QmlHandler::onTouchMove(int x, int y)
+{
+    qDebug() <<  "...onTouchMove: " << x << " x " << y;
+    QTest::mouseMove((QWindow*)qmlWindow, QPoint(x, y));
+}
+
+void QmlHandler::onTouchRelease(int x, int y)
+{
+    qDebug() <<  "onTouchRelease: " << x << " x " << y;
+    QTest::mouseRelease((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
+}
+
+/*
 void QmlHandler::onCameraNewPosition(int x, int y)
 {
     //printf("onCameraNewPosition(%d; %d) \n", x, y);
@@ -66,7 +87,6 @@ void QmlHandler::onTimer()
     QPoint pos(x, y);
     QTest::mouseClick((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, pos);
 
-
         //cursor->setProperty("x", x);
         //cursor->setProperty("y", y);
 
@@ -74,4 +94,4 @@ void QmlHandler::onTimer()
         //emitter->setProperty("y", y);
     //}
 }
-
+*/

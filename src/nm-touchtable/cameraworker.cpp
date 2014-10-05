@@ -43,8 +43,20 @@ void CameraWorker::run()
                  int objCenterX = objectBounds.x + objectBounds.width/2.0;
                  int objCenterY = objectBounds.y + objectBounds.height/2.0;
 
-                 emit newPosition((int)(objCenterX * xRatio), (int)(objCenterY * yRatio));
+                 mTouchX = (int)(objCenterX * xRatio);
+                 mTouchY = (int)(objCenterY * yRatio);
 
+                 if (!mIsTouchPressed){
+                     mIsTouchPressed = true;
+                     emit touchPress(mTouchX, mTouchY);
+                 }else{
+                     emit touchMove(mTouchX, mTouchY);
+                 }
+             }else{
+                  if (mIsTouchPressed){
+                      mIsTouchPressed = false;
+                      emit touchRelease(mTouchX, mTouchY);
+                  }
              }
         }
 

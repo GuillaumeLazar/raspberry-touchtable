@@ -14,7 +14,7 @@ Window {
 
     property int newX : -1
     property int newY : -1
-    property int globalEmitRate : 10 //400
+    property int globalEmitRate : 400 //400
 
     MouseArea {
         id: mouseArea
@@ -29,8 +29,9 @@ Window {
         y: 0
         enabled: true
     }
+    */
 
-
+    /*
     Rectangle {
         id: cursor
         objectName: "cursor"
@@ -41,9 +42,10 @@ Window {
         //x: mouseArea.pressed ? mouseArea.mouseX : window1.width / 2
         y: mouseArea.mouseY
         x: mouseArea.mouseX
-        visible: false
+        visible: true
     }
     */
+
 
     ParticleSystem {
         id: root
@@ -60,18 +62,18 @@ Window {
             //y: 0
             width: 16
             height: 16
-            emitRate: globalEmitRate //globalEmitRate
-            lifeSpan: 1000 //8000
-            lifeSpanVariation: 500
+            emitRate: mouseArea.pressed ? globalEmitRate : 0 //globalEmitRate
+            lifeSpan: 2500 //8000
+            //lifeSpanVariation: 500
             size: 16
             //endSize: 8
-            //sizeVariation: 16
-            //velocity: PointDirection {x: root.width/10; y: root.height/10;}
-            //acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
+            sizeVariation: 8
+            velocity: PointDirection {x: root.width/10; y: root.height/10;}
+            acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
 
-            velocity: PointDirection {xVariation: 4; yVariation: 4;}
-            acceleration: PointDirection {xVariation: 10; yVariation: 10;}
-            velocityFromMovement: 8
+            //velocity: PointDirection {xVariation: 4; yVariation: 4;}
+            //acceleration: PointDirection {xVariation: 10; yVariation: 10;}
+            //velocityFromMovement: 8
         }
 
 
