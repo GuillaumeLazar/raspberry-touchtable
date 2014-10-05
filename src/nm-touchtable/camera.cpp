@@ -66,13 +66,10 @@ bool acqFrameFromCamera()
 
 void processFrame(int, void*)
 {
-
-
     int BLUR_SIZE = 1;           // 3
     double BLUR_SIGMA = 0;     //1.5
     int THRESHOLD_SIZE = 15;     //15  //10 ko
     int THRESHOLD_C = -8;        //-8
-
 
     // original to grayscale
     cvtColor(frame, frameGray, CV_BGR2GRAY);

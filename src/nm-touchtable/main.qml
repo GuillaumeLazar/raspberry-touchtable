@@ -48,7 +48,7 @@ Window {
 
 
     ParticleSystem {
-        id: root
+        id: particleSystem
         anchors.fill: parent
 
         Emitter {
@@ -68,13 +68,21 @@ Window {
             size: 16
             //endSize: 8
             sizeVariation: 8
-            velocity: PointDirection {x: root.width/10; y: root.height/10;}
-            acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
+
+            velocity: TargetDirection {
+                targetItem: attractCenter
+                magnitude: 100.0
+            }
+
+            //velocity: PointDirection {x: root.width/10; y: root.height/10;}
+            //acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
 
             //velocity: PointDirection {xVariation: 4; yVariation: 4;}
             //acceleration: PointDirection {xVariation: 10; yVariation: 10;}
             //velocityFromMovement: 8
         }
+
+
 
 
         CustomParticle {
@@ -88,7 +96,7 @@ Window {
                     highp vec2 circlePos = qt_TexCoord0*2.0 - vec2(1.0,1.0);
                     highp float dist = length(circlePos);
                     highp float circleFactor = max(min(1.0 - dist, 1.0), 0.0);
-                    gl_FragColor = vec4(fPos.x*2.0 - fPos.y, fPos.y*2.0 - fPos.x, fPos.x*fPos.y*2.0, 0.0) * circleFactor * fFade;
+                    gl_FragColor = vec4(fPos.x*1.0 - fPos.y, fPos.y*2.0 - fPos.x, fPos.x*fPos.y*2.0, 0.0) * circleFactor * fFade;
                 }"
 
 
@@ -236,5 +244,17 @@ Window {
                   testButtonDrag.color = "#9d9999"
               }
         }
+    }
+
+    Attractor {
+        id: attractCenter
+        x: window1.width / 2
+        y: window1.height / 2
+        width: 16
+        height: 16
+        system: particleSystem
+        pointX: 0
+        pointY: 0
+        strength: 10.0
     }
 }
