@@ -102,8 +102,10 @@ void QmlHandler::updateVisualItem(QObject *visualItem, bool visible, Rect *objec
 
         visualItem->setProperty("emitter_x", x);
         visualItem->setProperty("emitter_y", y);
+        visualItem->setProperty("emitter_enabled", true);
         visualItem->setProperty("emitter_emitRate", 100);
     }else{
+        visualItem->setProperty("emitter_enabled", false);
         visualItem->setProperty("emitter_emitRate", 0);
     }
 }

@@ -5,6 +5,7 @@ ParticleSystem {
     property int emitter_x: 0
     property int emitter_y: 0
     property int emitter_emitRate: 0
+    property bool emitter_enabled: true
 
     Emitter {
         id: emitter
@@ -19,12 +20,16 @@ ParticleSystem {
         sizeVariation: 8
         //lifeSpanVariation: 500
         //endSize: 8
+        acceleration: AngleDirection {angleVariation: 360; magnitude: 100; }
+        enabled: emitter_enabled
 
+        /*
         velocity: TargetDirection {
             targetItem: attractCenter
             magnitude: 100.0
             targetVariation: 100.0
         }
+        */
 
         //velocity: PointDirection {x: root.width/10; y: root.height/10;}
         //acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
@@ -34,6 +39,7 @@ ParticleSystem {
         //velocityFromMovement: 8
     }
 
+    /*
     Attractor {
         id: attractCenter
         x: window1.width / 2
@@ -45,12 +51,37 @@ ParticleSystem {
         pointY: 0
         strength: 10.0
     }
+    */
 
 
 
     CustomParticle {
 
 
+        fragmentShader: "
+            varying highp vec2 fPos;
+            varying highp vec2 qt_TexCoord0;
+            void main() {
+                highp vec2 circlePos = qt_TexCoord0*2.0 - vec2(1.0,1.0);
+                highp float dist = length(circlePos);
+                highp float circleFactor = max(min(1.0 - dist, 1.0), 0.0);
+
+                highp float dX = fPos.x / 1280.0;
+                highp float dY = fPos.y / 800.0;
+
+                gl_FragColor = vec4(dX, 1.0 - dX, dY, 0.0) * circleFactor;
+            }"
+
+        vertexShader: "
+            varying highp vec2 fPos;
+
+            void main() {
+                defaultMain();
+                fPos = qt_ParticlePos;
+
+            }"
+
+        /*
         fragmentShader: "
             varying highp vec2 fPos;
             varying lowp float fFade;
@@ -61,10 +92,9 @@ ParticleSystem {
                 highp float circleFactor = max(min(1.0 - dist, 1.0), 0.0);
                 gl_FragColor = vec4(fPos.x*1.0 - fPos.y, fPos.y*2.0 - fPos.x, fPos.x*fPos.y*2.0, 0.0) * circleFactor * fFade;
             }"
+            */
 
-
-
-
+        /*
         vertexShader:"
             uniform lowp float qt_Opacity;
             varying lowp float fFade;
@@ -95,6 +125,7 @@ ParticleSystem {
                 fFade = fadeIn * fadeOut * qt_Opacity;
                 fPos = vec2(pos.x/320., pos.y/480.);
             }"
+            */
 
 
     }
