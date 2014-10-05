@@ -59,6 +59,16 @@ Window {
         emitter_emitRate: 0
     }
 
+    VisualItem{
+        id: visualItem5
+        objectName: "visualItem5"
+        anchors.fill: parent
+
+        emitter_x: 0
+        emitter_y: 0
+        emitter_emitRate: 0
+    }
+
 
 
     Rectangle {

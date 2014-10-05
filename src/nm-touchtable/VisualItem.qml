@@ -15,14 +15,29 @@ ParticleSystem {
         emitRate: emitter_emitRate
         width: 16
         height: 16
-        lifeSpan: 2500
+        lifeSpan: 5000
         size: 16
         sizeVariation: 8
         //lifeSpanVariation: 500
         //endSize: 8
-        acceleration: AngleDirection {angleVariation: 360; magnitude: 100; }
+
         enabled: emitter_enabled
 
+        /*
+        velocity: AngleDirection {
+            angle: 0
+            //angleVariation: 15
+            magnitude: 100
+            //magnitudeVariation: 50
+        }
+        */
+
+        acceleration: AngleDirection {
+            angleVariation: 360;
+            magnitude: 200;
+            magnitudeVariation: 50
+
+        }
         /*
         velocity: TargetDirection {
             targetItem: attractCenter
@@ -59,25 +74,51 @@ ParticleSystem {
 
 
         fragmentShader: "
-            varying highp vec2 fPos;
+            varying highp vec2 position;
             varying highp vec2 qt_TexCoord0;
             void main() {
                 highp vec2 circlePos = qt_TexCoord0*2.0 - vec2(1.0,1.0);
                 highp float dist = length(circlePos);
                 highp float circleFactor = max(min(1.0 - dist, 1.0), 0.0);
 
-                highp float dX = fPos.x / 1280.0;
-                highp float dY = fPos.y / 800.0;
+                highp float dX = position.x / 1280.0;
+                highp float dY = position.y / 800.0;
 
                 gl_FragColor = vec4(dX, 1.0 - dX, dY, 0.0) * circleFactor;
             }"
 
         vertexShader: "
-            varying highp vec2 fPos;
+
+
+//            attribute highp vec2 qt_ParticlePos;
+//            attribute highp vec2 qt_ParticleTex;
+//            attribute highp vec4 qt_ParticleData; //  x = time,  y = lifeSpan, z = size,  w = endSize
+//            attribute highp vec4 qt_ParticleVec; // x,y = constant velocity,  z,w = acceleration
+//            attribute highp float qt_ParticleR;
+//            uniform highp mat4 qt_Matrix;
+//            uniform highp float qt_Timestamp;
+//            varying highp vec2 qt_TexCoord0;
+
+            varying highp vec2 position;
 
             void main() {
-                defaultMain();
-                fPos = qt_ParticlePos;
+                //defaultMain();
+                qt_TexCoord0 = qt_ParticleTex;
+                highp float size = qt_ParticleData.z;
+                highp float endSize = qt_ParticleData.w;
+                highp float t = (qt_Timestamp - qt_ParticleData.x) / qt_ParticleData.y;
+                highp float currentSize = mix(size, endSize, t * t);
+                if (t < 0. || t > 1.)
+                    currentSize = 0.;
+
+
+                position = qt_ParticlePos
+                       - currentSize / 2. + currentSize * qt_ParticleTex   // adjust size
+                       + qt_ParticleVec.xy * t * qt_ParticleData.y         // apply velocity vector..
+                       + 0.5 * qt_ParticleVec.zw * pow(t * qt_ParticleData.y, 2.) // apply acceleration and lifespan
+                       ;
+
+                gl_Position = qt_Matrix * vec4(position.x, position.y, 0, 1);
 
             }"
 
@@ -129,14 +170,4 @@ ParticleSystem {
 
 
     }
-
-
-    /*
-    // renders a tiny image
-    ImageParticle {
-        source: "particle.png"
-        colorVariation: 1.0
-    }
-    */
-
 }

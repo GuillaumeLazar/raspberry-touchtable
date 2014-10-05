@@ -35,6 +35,7 @@ private:
     QObject *visualItem2;
     QObject *visualItem3;
     QObject *visualItem4;
+    QObject *visualItem5;
     QList<QObject*> listVisualItems;
 
     //CustomImage *customImageFrame;
