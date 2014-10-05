@@ -45,7 +45,7 @@ private:
 
 public slots:
     void onTimer();
-    void onCameraNewFrame();
+    void onCameraNewFrame(vector<Rect>* objects);
 };
 
 #endif // MAINWINDOW_H

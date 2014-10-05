@@ -16,6 +16,15 @@ QmlHandler::QmlHandler(bool isFakeMode)
     emitter = qmlWindow->findChild<QObject*>("emitter");
     mouseArea = qmlWindow->findChild<QObject*>("mouseArea");
 
+    visualItem1 = qmlWindow->findChild<QObject*>("visualItem1");
+    visualItem2 = qmlWindow->findChild<QObject*>("visualItem2");
+    visualItem3 = qmlWindow->findChild<QObject*>("visualItem3");
+    visualItem4 = qmlWindow->findChild<QObject*>("visualItem4");
+    listVisualItems.append(visualItem1);
+    listVisualItems.append(visualItem2);
+    listVisualItems.append(visualItem3);
+    listVisualItems.append(visualItem4);
+
     //customImageFrame = (CustomImage*) qmlWindow->findChild<QObject*>("frame");
     //customImageFrameDebug = (CustomImage*) qmlWindow->findChild<QObject*>("frameDebug");
 
@@ -35,6 +44,7 @@ QmlHandler::QmlHandler(bool isFakeMode)
     connect(mCameraWorker, &CameraWorker::touchPress, this, &QmlHandler::onTouchPress);
     connect(mCameraWorker, &CameraWorker::touchMove, this, &QmlHandler::onTouchMove);
     connect(mCameraWorker, &CameraWorker::touchRelease, this, &QmlHandler::onTouchRelease);
+    connect(mCameraWorker, &CameraWorker::newFrame, this, &QmlHandler::onCameraNewFrame);
     mCameraWorker->start();
 }
 
@@ -54,6 +64,69 @@ void QmlHandler::onTouchRelease(int x, int y)
 {
     qDebug() <<  "onTouchRelease: " << x << " x " << y;
     QTest::mouseRelease((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
+}
+
+void QmlHandler::onCameraNewFrame(vector<Rect>* objects)
+{
+//    if (objects->size() > 0){
+//        qDebug() <<  "onCameraNewFrame: count = " << objects->size();
+//    }
+
+    // first (i=0) is processed by mouse way
+    for (int i = 1; i < listVisualItems.size(); ++i) {
+
+        QObject *visualItem = listVisualItems.at(i);
+
+        if (objects->size() > i + 1){
+            Rect objectBounds = objects->at(i);
+
+            updateVisualItem(visualItem, true, &objectBounds);
+        }else{
+            updateVisualItem(visualItem, false, NULL);
+        }
+    }
+
+    /*
+    if (objects->size() > 1){
+        Rect objectBounds = objects->at(1);
+
+        float xRatio = 4.0f;
+        float yRatio = 3.33f;
+
+        int objCenterX = objectBounds.x + objectBounds.width/2.0;
+        int objCenterY = objectBounds.y + objectBounds.height/2.0;
+
+        int x = (int)(objCenterX * xRatio);
+        int y = (int)(objCenterY * yRatio);
+
+        visualItem2->setProperty("emitter_x", x);
+        visualItem2->setProperty("emitter_y", y);
+        visualItem2->setProperty("emitter_emitRate", 100);
+    }else{
+        visualItem2->setProperty("emitter_emitRate", 0);
+    }
+    */
+}
+
+
+void QmlHandler::updateVisualItem(QObject *visualItem, bool visible, Rect *objectBounds)
+{
+    if(visible){
+        float xRatio = 4.0f;
+        float yRatio = 3.33f;
+
+        int objCenterX = objectBounds->x + objectBounds->width/2.0;
+        int objCenterY = objectBounds->y + objectBounds->height/2.0;
+
+        int x = (int)(objCenterX * xRatio);
+        int y = (int)(objCenterY * yRatio);
+
+        visualItem->setProperty("emitter_x", x);
+        visualItem->setProperty("emitter_y", y);
+        visualItem->setProperty("emitter_emitRate", 100);
+    }else{
+        visualItem->setProperty("emitter_emitRate", 0);
+    }
 }
 
 /*

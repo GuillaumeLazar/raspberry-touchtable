@@ -57,7 +57,7 @@ void CameraWorker::run()
                   }
              }
 
-             emit newFrame();
+             emit newFrame(objects);
         }
 
         // 1000 : 53% : emitter fluide

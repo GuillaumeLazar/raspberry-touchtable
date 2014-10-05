@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>particle.png</file>
         <file>FPSMonitor.qml</file>
+        <file>Button.qml</file>
+        <file>VisualItem.qml</file>
     </qresource>
 </RCC>

@@ -39,7 +39,7 @@ void MainWindow::updateFrameLabel(Mat &frame, QLabel *label, QImage *image)
     label->setPixmap(pixmap);
 }
 
-void MainWindow::onCameraNewFrame()
+void MainWindow::onCameraNewFrame(vector<Rect> * objects)
 {
 
     mMutexPoisition.lock();

@@ -22,7 +22,7 @@ private:
     int mTouchY;
 
 signals:  
-    void newFrame();
+    void newFrame(vector<Rect>*);
 
     void touchPress(int x, int y);
     void touchRelease(int x, int y);
