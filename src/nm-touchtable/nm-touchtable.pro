@@ -3,6 +3,7 @@ TEMPLATE = app
 QT += qml quick
 
 QT += gui
+QT += testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = nm-touchtable

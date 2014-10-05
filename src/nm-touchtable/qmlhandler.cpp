@@ -1,5 +1,7 @@
 #include "qmlhandler.h"
 
+#include <QTest>
+#include <QApplication>
 
 QmlHandler::QmlHandler(bool isFakeMode)
 {
@@ -12,6 +14,7 @@ QmlHandler::QmlHandler(bool isFakeMode)
 
     cursor = qmlWindow->findChild<QObject*>("cursor");
     emitter = qmlWindow->findChild<QObject*>("emitter");
+    mouseArea = qmlWindow->findChild<QObject*>("mouseArea");
 
     //customImageFrame = (CustomImage*) qmlWindow->findChild<QObject*>("frame");
     //customImageFrameDebug = (CustomImage*) qmlWindow->findChild<QObject*>("frameDebug");
@@ -22,8 +25,10 @@ QmlHandler::QmlHandler(bool isFakeMode)
     mPositionX = 0;
     mPositionY = 0;
 
-    // QML timer
-    mTimer.start(10);
+    if (!mIsFakeMode){
+        // QML timer
+        mTimer.start(10);
+    }
 
     // Camera position aquisition
     mCameraWorker = new CameraWorker(mIsFakeMode, this);
@@ -56,13 +61,17 @@ void QmlHandler::onTimer()
 
     mMutexPoisition.unlock();
 
-    if (positionUpdated){
+    //if (positionUpdated){
 
-        cursor->setProperty("x", x);
-        cursor->setProperty("y", y);
+    QPoint pos(x, y);
+    QTest::mouseClick((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, pos);
 
-        emitter->setProperty("x", x);
-        emitter->setProperty("y", y);
-    }
+
+        //cursor->setProperty("x", x);
+        //cursor->setProperty("y", y);
+
+        //emitter->setProperty("x", x);
+        //emitter->setProperty("y", y);
+    //}
 }
 

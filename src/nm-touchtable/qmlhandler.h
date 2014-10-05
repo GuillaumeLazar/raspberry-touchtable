@@ -25,6 +25,7 @@ private:
     QObject *cursor;
     QObject *emitter;
     QObject *qmlWindow;
+    QObject *mouseArea;
 
     //CustomImage *customImageFrame;
     //CustomImage *customImageFrameRoi;

@@ -14,7 +14,14 @@ Window {
 
     property int newX : -1
     property int newY : -1
-    property int globalEmitRate : 400 //400
+    property int globalEmitRate : 10 //400
+
+    MouseArea {
+        id: mouseArea
+        objectName: "mouseArea"
+        anchors.fill: parent
+    }
+
 
     FPSMonitor {
         id: fpsMonitor
@@ -26,11 +33,13 @@ Window {
     Rectangle {
         id: cursor
         objectName: "cursor"
-        width: 32
-        height: 32
+        width: 16
+        height: 16
         color: "red"
-        x: window1.width / 2
-        y: window1.height / 2
+        //y: mouseArea.pressed ? mouseArea.mouseY : window1.height / 2
+        //x: mouseArea.pressed ? mouseArea.mouseX : window1.width / 2
+        y: mouseArea.mouseY
+        x: mouseArea.mouseX
         visible: true
 
     }
@@ -44,16 +53,24 @@ Window {
             objectName: "emitter"
             //x: window1.width / 2
             //y: window1.height / 2
-            x: 0
-            y: 0
-            width: 50
-            height: 50
+            y: mouseArea.mouseY
+            x: mouseArea.mouseX
+            //x: 0
+            //y: 0
+            width: 16
+            height: 16
             emitRate: globalEmitRate //globalEmitRate
-            lifeSpan: 4000 //8000
-            size: 24
-            sizeVariation: 16
-            velocity: PointDirection {x: root.width/10; y: root.height/10;}
-            acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
+            lifeSpan: 1000 //8000
+            lifeSpanVariation: 500
+            size: 16
+            //endSize: 8
+            //sizeVariation: 16
+            //velocity: PointDirection {x: root.width/10; y: root.height/10;}
+            //acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
+
+            velocity: PointDirection {xVariation: 4; yVariation: 4;}
+            acceleration: PointDirection {xVariation: 10; yVariation: 10;}
+            velocityFromMovement: 8
         }
 
 
@@ -76,6 +93,7 @@ Window {
 
         CustomParticle {
 
+
             fragmentShader: "
                 varying highp vec2 fPos;
                 varying lowp float fFade;
@@ -86,6 +104,9 @@ Window {
                     highp float circleFactor = max(min(1.0 - dist, 1.0), 0.0);
                     gl_FragColor = vec4(fPos.x*2.0 - fPos.y, fPos.y*2.0 - fPos.x, fPos.x*fPos.y*2.0, 0.0) * circleFactor * fFade;
                 }"
+
+
+
 
             vertexShader:"
                 uniform lowp float qt_Opacity;
@@ -116,8 +137,8 @@ Window {
 
                     fFade = fadeIn * fadeOut * qt_Opacity;
                     fPos = vec2(pos.x/320., pos.y/480.);
-                }
-            "
+                }"
+
 
         }
 

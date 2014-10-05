@@ -11,11 +11,11 @@ int main(int argc, char *argv[])
     bool isfakeMode = false;
     bool isMonitorMode = false;
 
-    if (argc == 2 && strcmp(argv[1], "-fakeMode") == 0){
+    if (argc >= 2 && strcmp(argv[1], "-fakeMode") == 0){
         isfakeMode = true;
     }
 
-    if (argc == 2 && strcmp(argv[1], "-monitor") == 0){
+    if (argc >= 2 && strcmp(argv[1], "-monitor") == 0){
         isMonitorMode = true;
     }
 
