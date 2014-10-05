@@ -22,13 +22,14 @@ Window {
         anchors.fill: parent
     }
 
-
+    /*
     FPSMonitor {
         id: fpsMonitor
         x: 0
         y: 0
         enabled: true
     }
+
 
     Rectangle {
         id: cursor
@@ -40,9 +41,9 @@ Window {
         //x: mouseArea.pressed ? mouseArea.mouseX : window1.width / 2
         y: mouseArea.mouseY
         x: mouseArea.mouseX
-        visible: true
-
+        visible: false
     }
+    */
 
     ParticleSystem {
         id: root
@@ -71,23 +72,6 @@ Window {
             velocity: PointDirection {xVariation: 4; yVariation: 4;}
             acceleration: PointDirection {xVariation: 10; yVariation: 10;}
             velocityFromMovement: 8
-        }
-
-
-        Timer {
-            interval: 25; running: false; repeat: true;
-            onTriggered: {
-                if (newX > 0){
-                    //emitter.emitRate = globalEmitRate;
-                    //emitter.x = newX;
-                    //emitter.y = newY;
-
-                    //cursor.x = newX;
-                    //cursor.y = newY;
-                }else{
-                    //emitter.emitRate = 0;
-                }
-            }
         }
 
 
@@ -151,5 +135,66 @@ Window {
         }
         */
 
+    }
+
+    Rectangle {
+        id: exitButton
+        x: 0
+        y: 0
+        width: 150
+        height: 40
+        color: "#9d9999"
+        border.color: "#000000"
+
+        Text {
+            id: exitButton_text
+            text: "Quit"
+            anchors.fill: parent
+            styleColor: "#000000"
+            anchors.top: parent.top
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 12
+        }
+
+        MouseArea {
+            id: exitButton_mouseArea
+            anchors.fill: parent
+            onClicked: {
+                  Qt.quit();
+              }
+        }
+    }
+
+    Rectangle {
+        id: testButton
+        x: 160
+        y: 0
+        width: 150
+        height: 40
+        color: "#9d9999"
+        border.color: "#000000"
+
+        Text {
+            text: "Click me"
+            anchors.fill: parent
+            styleColor: "#000000"
+            anchors.top: parent.top
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 12
+        }
+
+        MouseArea {
+            anchors.fill: parent
+
+            onPressed: {
+                  testButton.color = "#ff0000"
+              }
+
+            onReleased: {
+                  testButton.color = "#9d9999"
+              }
+        }
     }
 }
