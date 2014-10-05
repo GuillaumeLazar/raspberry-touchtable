@@ -58,102 +58,129 @@ Window {
     }
 
 
-    Rectangle {
-        id: exitButton
-        x: 0
-        y: 0
-        width: 150
-        height: 40
-        color: "#9d9999"
-        border.color: "#000000"
-
-        Text {
-            id: exitButton_text
-            text: "Quit"
-            anchors.fill: parent
-            styleColor: "#000000"
-            anchors.top: parent.top
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 12
-        }
-
-        MouseArea {
-            id: exitButton_mouseArea
-            anchors.fill: parent
-            onClicked: {
-                  Qt.quit();
-              }
-        }
-    }
 
     Rectangle {
-        id: testButton
-        x: 160
-        y: 0
-        width: 150
-        height: 40
-        color: "#9d9999"
-        border.color: "#000000"
+        id: menuBar
+        width: parent.width
+        height: 53
+        color: "#ffffff"
+        opacity: 0.7
+        z: 1
+        anchors.top: parent.top
+        anchors.topMargin: 0
 
-        Text {
-            text: "Click me"
-            anchors.fill: parent
-            styleColor: "#000000"
-            anchors.top: parent.top
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 12
+        Rectangle {
+            id: exitButton
+            x: 0
+            y: 380
+            width: 150
+            height: 40
+            color: "#9d9999"
+            anchors.verticalCenter: parent.verticalCenter
+            z: 2
+            border.color: "#000000"
+
+            Text {
+                id: exitButton_text
+                text: "Quit"
+                anchors.fill: parent
+                styleColor: "#000000"
+                anchors.top: parent.top
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 12
+            }
+
+            MouseArea {
+                id: exitButton_mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    Qt.quit();
+                }
+            }
         }
 
-        MouseArea {
-            anchors.fill: parent
+        Rectangle {
+            id: testButtonDrag
+            x: 320
+            y: 0
+            width: 150
+            height: 40
+            color: "#9d9999"
+            anchors.verticalCenter: parent.verticalCenter
+            z: 5
+            border.color: "#000000"
 
-            onPressed: {
-                  testButton.color = "#ff0000"
-              }
+            Text {
+                text: "Drag me"
+                anchors.fill: parent
+                styleColor: "#000000"
+                anchors.top: parent.top
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 12
+            }
 
-            onReleased: {
-                  testButton.color = "#9d9999"
-                testButtonDrag.x = 320;
+            MouseArea {
+                anchors.fill: parent
+
+                drag.target: parent
+                drag.axis: Drag.XandYAxis
+
+                onPressed: {
+                    testButtonDrag.color = "#ff0000"
+                }
+
+                onReleased: {
+                    testButtonDrag.color = "#9d9999"
+                }
+            }
+        }
+
+        Rectangle {
+            id: testButton
+            x: 160
+            y: 0
+            width: 150
+            height: 40
+            color: "#9d9999"
+            anchors.verticalCenter: parent.verticalCenter
+            z: 3
+            border.color: "#000000"
+
+            Text {
+                text: "Click me"
+                anchors.fill: parent
+                styleColor: "#000000"
+                anchors.top: parent.top
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 12
+            }
+
+            MouseArea {
+                anchors.fill: parent
+
+                onPressed: {
+                    testButton.color = "#ff0000"
+                }
+
+                onReleased: {
+                    testButton.color = "#9d9999"
+                    testButtonDrag.x = 320;
                     testButtonDrag.y = 0;
-              }
+                }
+            }
         }
-    }
-
-
-    Rectangle {
-        id: testButtonDrag
-        x: 320
-        y: 0
-        width: 150
-        height: 40
-        color: "#9d9999"
-        border.color: "#000000"
 
         Text {
-            text: "Drag me"
-            anchors.fill: parent
-            styleColor: "#000000"
-            anchors.top: parent.top
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 12
-        }
-
-        MouseArea {
-            anchors.fill: parent
-
-            drag.target: parent
-            drag.axis: Drag.XandYAxis
-
-            onPressed: {
-                  testButtonDrag.color = "#ff0000"
-              }
-
-            onReleased: {
-                  testButtonDrag.color = "#9d9999"
-              }
+            id: textinfo
+            objectName: "textinfo"
+            x: 502
+            y: 20
+            text: "Loading..."
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: 16
         }
     }
 

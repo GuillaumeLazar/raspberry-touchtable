@@ -40,7 +40,7 @@ ParticleSystem {
         y: window1.height / 2
         width: 16
         height: 16
-        system: particleSystem
+        system: parent
         pointX: 0
         pointY: 0
         strength: 10.0

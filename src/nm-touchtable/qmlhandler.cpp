@@ -3,6 +3,7 @@
 #include <QTest>
 #include <QApplication>
 
+
 QmlHandler::QmlHandler(bool isFakeMode)
 {
     mIsFakeMode = isFakeMode;
@@ -15,6 +16,8 @@ QmlHandler::QmlHandler(bool isFakeMode)
     cursor = qmlWindow->findChild<QObject*>("cursor");
     emitter = qmlWindow->findChild<QObject*>("emitter");
     mouseArea = qmlWindow->findChild<QObject*>("mouseArea");
+    textinfo = qmlWindow->findChild<QObject*>("textinfo");
+
 
     visualItem1 = qmlWindow->findChild<QObject*>("visualItem1");
     visualItem2 = qmlWindow->findChild<QObject*>("visualItem2");
@@ -36,7 +39,6 @@ QmlHandler::QmlHandler(bool isFakeMode)
 
     // QML timer
     //mTimer.start(10);
-
 
     // Camera position aquisition
     mCameraWorker = new CameraWorker(mIsFakeMode, this);
@@ -68,9 +70,7 @@ void QmlHandler::onTouchRelease(int x, int y)
 
 void QmlHandler::onCameraNewFrame(vector<Rect>* objects)
 {
-//    if (objects->size() > 0){
-//        qDebug() <<  "onCameraNewFrame: count = " << objects->size();
-//    }
+    textinfo->setProperty("text", QString("objects count: %1").arg(objects->size()));
 
     // first (i=0) is processed by mouse way
     for (int i = 1; i < listVisualItems.size(); ++i) {
@@ -85,27 +85,6 @@ void QmlHandler::onCameraNewFrame(vector<Rect>* objects)
             updateVisualItem(visualItem, false, NULL);
         }
     }
-
-    /*
-    if (objects->size() > 1){
-        Rect objectBounds = objects->at(1);
-
-        float xRatio = 4.0f;
-        float yRatio = 3.33f;
-
-        int objCenterX = objectBounds.x + objectBounds.width/2.0;
-        int objCenterY = objectBounds.y + objectBounds.height/2.0;
-
-        int x = (int)(objCenterX * xRatio);
-        int y = (int)(objCenterY * yRatio);
-
-        visualItem2->setProperty("emitter_x", x);
-        visualItem2->setProperty("emitter_y", y);
-        visualItem2->setProperty("emitter_emitRate", 100);
-    }else{
-        visualItem2->setProperty("emitter_emitRate", 0);
-    }
-    */
 }
 
 

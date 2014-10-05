@@ -29,6 +29,7 @@ private:
     QObject *emitter;
     QObject *qmlWindow;
     QObject *mouseArea;
+    QObject *textinfo;
 
     QObject *visualItem1;
     QObject *visualItem2;

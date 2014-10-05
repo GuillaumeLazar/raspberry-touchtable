@@ -66,9 +66,9 @@ bool acqFrameFromCamera()
 
 void processFrame(int, void*)
 {
-    int BLUR_SIZE = 1;           // 3
-    double BLUR_SIGMA = 0;     //1.5
-    int THRESHOLD_SIZE = 15;     //15  //10 ko
+    int BLUR_SIZE = 3;           // 3
+    double BLUR_SIGMA = 1.5;     //1.5
+    int THRESHOLD_SIZE = 9;     //15  //10 ko
     int THRESHOLD_C = -8;        //-8
 
     // original to grayscale
@@ -127,7 +127,7 @@ void processFrame(int, void*)
 
     // dilate + erode
     //erode(frameROI, frameROI, dummyMat, Point(-1, -1), 1);
-    //dilate(frameROI, frameROI, dummyMat, Point(-1, -1), 1);
+    dilate(frameROI, frameROI, dummyMat, Point(-1, -1), 2);
 
     // DEBUG
     resize(frameROI, frameDebug, Size(320, 240));
