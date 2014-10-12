@@ -10,6 +10,7 @@
 #include "CustomImage.h"
 #include "DeviceAcquisition.h"
 #include "DeviceAcquisitionCamera.h"
+#include "DeviceAcquisitionDemo.h"
 
 
 class QmlHandler : public QObject
@@ -48,7 +49,7 @@ private:
 
     int mCptUpdate;
 
-    DeviceAcquisitionCamera *mDeviceAcquisition;
+    DeviceAcquisition *mDeviceAcquisition;
 
     int mPositionX;
     int mPositionY;

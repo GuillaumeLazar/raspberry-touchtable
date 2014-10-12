@@ -1,7 +1,6 @@
 #include "DeviceAcquisition.h"
 
-DeviceAcquisition::DeviceAcquisition(bool isFakeMode, QObject *parent) :
+DeviceAcquisition::DeviceAcquisition(QObject *parent) :
     QThread(parent)
 {
-    mIsFakeMode = isFakeMode;
 }

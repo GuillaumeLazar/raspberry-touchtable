@@ -43,7 +43,9 @@ QmlHandler::QmlHandler(bool isFakeMode)
     //mTimer.start(10);
 
     // Camera position aquisition
-    mDeviceAcquisition = new DeviceAcquisitionCamera(mIsFakeMode, this);
+    //mDeviceAcquisition = new DeviceAcquisitionCamera(mIsFakeMode, this);
+    mDeviceAcquisition = new DeviceAcquisitionDemo(this);
+
     //connect(mCameraWorker, &CameraWorker::newPosition, this, &QmlHandler::onCameraNewPosition);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchPress, this, &QmlHandler::onTouchPress);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchMove, this, &QmlHandler::onTouchMove);

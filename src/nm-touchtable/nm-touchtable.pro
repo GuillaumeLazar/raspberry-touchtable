@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     DeviceAcquisition.cpp \
     MainWindow.cpp \
     QmlHandler.cpp \
-    CustomImage.cpp
+    CustomImage.cpp \
+    DeviceAcquisitionDemo.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,7 +35,8 @@ HEADERS += \
     DeviceAcquisition.h \
     MainWindow.h \
     QmlHandler.h \
-    CustomImage.h
+    CustomImage.h \
+    DeviceAcquisitionDemo.h
 
 
 raspi {
