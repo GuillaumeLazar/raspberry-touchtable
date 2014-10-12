@@ -11,6 +11,7 @@
 #include "DeviceAcquisition.h"
 #include "DeviceAcquisitionCamera.h"
 #include "DeviceAcquisitionDemo.h"
+#include "DeviceAcquisitionTcpServer.h"
 
 
 class QmlHandler : public QObject

@@ -34,7 +34,7 @@ ParticleSystem {
 
         acceleration: AngleDirection {
             angleVariation: 360;
-            magnitude: 200;
+            magnitude: 20;
             magnitudeVariation: 50
 
         }
@@ -75,6 +75,7 @@ ParticleSystem {
 
         fragmentShader: "
             varying highp vec2 position;
+            varying highp float lifespan;
             varying highp vec2 qt_TexCoord0;
             void main() {
                 highp vec2 circlePos = qt_TexCoord0*2.0 - vec2(1.0,1.0);
@@ -84,7 +85,19 @@ ParticleSystem {
                 highp float dX = position.x / 1280.0;
                 highp float dY = position.y / 800.0;
 
-                gl_FragColor = vec4(dX, 1.0 - dX, dY, 0.0) * circleFactor;
+                highp float red = dX;
+                highp float green = 1.0 - dX;
+                highp float blue = dY;
+
+
+//                if (lifespan > 5.0f){
+//                    red = 1.0f;
+//                    green = 1.0f;
+//                    blue = 1.0f;
+//                }
+
+
+                gl_FragColor = vec4(red, green, blue, 0) * circleFactor;
             }"
 
         vertexShader: "
@@ -100,6 +113,7 @@ ParticleSystem {
 //            varying highp vec2 qt_TexCoord0;
 
             varying highp vec2 position;
+            varying highp float lifespan;
 
             void main() {
                 //defaultMain();
@@ -118,56 +132,10 @@ ParticleSystem {
                        + 0.5 * qt_ParticleVec.zw * pow(t * qt_ParticleData.y, 2.) // apply acceleration and lifespan
                        ;
 
+                lifespan = qt_ParticleData.y;
+
                 gl_Position = qt_Matrix * vec4(position.x, position.y, 0, 1);
 
             }"
-
-        /*
-        fragmentShader: "
-            varying highp vec2 fPos;
-            varying lowp float fFade;
-            varying highp vec2 qt_TexCoord0;
-            void main() {//*2 because this generates dark colors mostly
-                highp vec2 circlePos = qt_TexCoord0*2.0 - vec2(1.0,1.0);
-                highp float dist = length(circlePos);
-                highp float circleFactor = max(min(1.0 - dist, 1.0), 0.0);
-                gl_FragColor = vec4(fPos.x*1.0 - fPos.y, fPos.y*2.0 - fPos.x, fPos.x*fPos.y*2.0, 0.0) * circleFactor * fFade;
-            }"
-            */
-
-        /*
-        vertexShader:"
-            uniform lowp float qt_Opacity;
-            varying lowp float fFade;
-            varying highp vec2 fPos;
-
-            void main() {
-                qt_TexCoord0 = qt_ParticleTex;
-                highp float size = qt_ParticleData.z;
-                highp float endSize = qt_ParticleData.w;
-
-                highp float t = (qt_Timestamp - qt_ParticleData.x) / qt_ParticleData.y;
-
-                highp float currentSize = mix(size, endSize, t * t);
-
-                if (t < 0. || t > 1.)
-                currentSize = 0.;
-
-                highp vec2 pos = qt_ParticlePos
-                - currentSize / 2. + currentSize * qt_ParticleTex          // adjust size
-                + qt_ParticleVec.xy * t * qt_ParticleData.y         // apply velocity vector..
-                + 0.5 * qt_ParticleVec.zw * pow(t * qt_ParticleData.y, 2.);
-
-                gl_Position = qt_Matrix * vec4(pos.x, pos.y, 0, 1);
-
-                highp float fadeIn = min(t * 20., 1.);
-                highp float fadeOut = 1. - max(0., min((t - 0.75) * 4., 1.));
-
-                fFade = fadeIn * fadeOut * qt_Opacity;
-                fPos = vec2(pos.x/320., pos.y/480.);
-            }"
-            */
-
-
     }
 }

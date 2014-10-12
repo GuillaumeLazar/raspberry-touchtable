@@ -3,7 +3,9 @@ TEMPLATE = app
 QT += qml quick
 
 QT += gui
+QT += network
 QT += testlib
+#QT += console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = nm-touchtable
@@ -15,7 +17,8 @@ SOURCES += main.cpp \
     MainWindow.cpp \
     QmlHandler.cpp \
     CustomImage.cpp \
-    DeviceAcquisitionDemo.cpp
+    DeviceAcquisitionDemo.cpp \
+    DeviceAcquisitionTcpServer.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,7 +39,8 @@ HEADERS += \
     MainWindow.h \
     QmlHandler.h \
     CustomImage.h \
-    DeviceAcquisitionDemo.h
+    DeviceAcquisitionDemo.h \
+    DeviceAcquisitionTcpServer.h
 
 
 raspi {
