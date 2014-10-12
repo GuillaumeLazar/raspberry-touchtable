@@ -10,10 +10,11 @@ TARGET = nm-touchtable
 
 SOURCES += main.cpp \
     camera.cpp \
-    qmlhandler.cpp \
-    customimage.cpp \
-    mainwindow.cpp \
-    cameraworker.cpp
+    DeviceAcquisitionCamera.cpp \
+    DeviceAcquisition.cpp \
+    MainWindow.cpp \
+    QmlHandler.cpp \
+    CustomImage.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,10 +30,11 @@ include(deployment.pri)
 
 HEADERS += \
     camera.h \
-    qmlhandler.h \
-    customimage.h \
-    mainwindow.h \
-    cameraworker.h
+    DeviceAcquisitionCamera.h \
+    DeviceAcquisition.h \
+    MainWindow.h \
+    QmlHandler.h \
+    CustomImage.h
 
 
 raspi {

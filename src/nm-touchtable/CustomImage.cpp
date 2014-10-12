@@ -1,4 +1,4 @@
-#include "customimage.h"
+#include "CustomImage.h"
 
 CustomImage::CustomImage(QQuickItem *parent)
     : QQuickPaintedItem(parent)

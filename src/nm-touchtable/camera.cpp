@@ -123,7 +123,7 @@ void processFrame(int, void*)
 
     // binary
     adaptiveThreshold(frameROI, frameROI, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, THRESHOLD_SIZE, THRESHOLD_C);
-    //threshold(frameROI, frameROI, 150, 255, THRESH_BINARY);
+    //threshold(frameROI, frameROI, 15, 255, THRESH_BINARY);
 
     // dilate + erode
     //erode(frameROI, frameROI, dummyMat, Point(-1, -1), 1);

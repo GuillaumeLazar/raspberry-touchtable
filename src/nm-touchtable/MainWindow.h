@@ -8,7 +8,8 @@
 #include <QMutex>
 
 #include "camera.h"
-#include "cameraworker.h"
+#include "DeviceAcquisition.h"
+#include "DeviceAcquisitionCamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -37,7 +38,7 @@ private:
     Mat mFramePhaseB;
     Mat mFramePhaseC;
 
-    CameraWorker *mCameraWorker;
+    DeviceAcquisition *mDeviceAcquisition;
     QMutex mMutexPoisition;
     bool mIsPositionUpdated;
     bool mIsFakeMode;

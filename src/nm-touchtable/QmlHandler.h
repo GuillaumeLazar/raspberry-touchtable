@@ -7,8 +7,9 @@
 #include <QMutex>
 
 #include "camera.h"
-#include "customimage.h"
-#include "cameraworker.h"
+#include "CustomImage.h"
+#include "DeviceAcquisition.h"
+#include "DeviceAcquisitionCamera.h"
 
 
 class QmlHandler : public QObject
@@ -47,7 +48,7 @@ private:
 
     int mCptUpdate;
 
-    CameraWorker *mCameraWorker;
+    DeviceAcquisitionCamera *mDeviceAcquisition;
 
     int mPositionX;
     int mPositionY;

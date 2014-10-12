@@ -1,27 +1,26 @@
-#ifndef CAMERAWORKER_H
-#define CAMERAWORKER_H
+#ifndef DEVICEACQUISITION_H
+#define DEVICEACQUISITION_H
 
-#include <stdio.h>
 #include <QThread>
 
 #include "camera.h"
 
-
-class CameraWorker : public QThread
+class DeviceAcquisition : public QThread
 {
     Q_OBJECT
+
 public:
-    explicit CameraWorker(bool isFakeMode, QObject *parent = 0);
+    DeviceAcquisition(bool isFakeMode, QObject *parent = 0);
 
-    void run() Q_DECL_OVERRIDE;
+    virtual void run() Q_DECL_OVERRIDE = 0;
 
-private:
+protected:
     bool mIsFakeMode;
     bool mIsTouchPressed;
     int mTouchX;
     int mTouchY;
 
-signals:  
+signals:
     void newFrame(vector<Rect>*);
 
     void touchPress(int x, int y);
@@ -29,7 +28,8 @@ signals:
     void touchMove(int x, int y);
 
 public slots:
-
 };
 
-#endif // CAMERAWORKER_H
+
+
+#endif // DEVICEACQUISITION_H

@@ -1,4 +1,4 @@
-#include "qmlhandler.h"
+#include "QmlHandler.h"
 
 #include <QTest>
 #include <QApplication>
@@ -43,13 +43,13 @@ QmlHandler::QmlHandler(bool isFakeMode)
     //mTimer.start(10);
 
     // Camera position aquisition
-    mCameraWorker = new CameraWorker(mIsFakeMode, this);
+    mDeviceAcquisition = new DeviceAcquisitionCamera(mIsFakeMode, this);
     //connect(mCameraWorker, &CameraWorker::newPosition, this, &QmlHandler::onCameraNewPosition);
-    connect(mCameraWorker, &CameraWorker::touchPress, this, &QmlHandler::onTouchPress);
-    connect(mCameraWorker, &CameraWorker::touchMove, this, &QmlHandler::onTouchMove);
-    connect(mCameraWorker, &CameraWorker::touchRelease, this, &QmlHandler::onTouchRelease);
-    connect(mCameraWorker, &CameraWorker::newFrame, this, &QmlHandler::onCameraNewFrame);
-    mCameraWorker->start();
+    connect(mDeviceAcquisition, &DeviceAcquisition::touchPress, this, &QmlHandler::onTouchPress);
+    connect(mDeviceAcquisition, &DeviceAcquisition::touchMove, this, &QmlHandler::onTouchMove);
+    connect(mDeviceAcquisition, &DeviceAcquisition::touchRelease, this, &QmlHandler::onTouchRelease);
+    connect(mDeviceAcquisition, &DeviceAcquisition::newFrame, this, &QmlHandler::onCameraNewFrame);
+    mDeviceAcquisition->start();
 }
 
 void QmlHandler::onTouchPress(int x, int y)

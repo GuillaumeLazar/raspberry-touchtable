@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(bool isFakeMode, QWidget *parent) :
@@ -18,9 +18,9 @@ MainWindow::MainWindow(bool isFakeMode, QWidget *parent) :
     mTimer.start(10);
 
     // Camera position aquisition
-    mCameraWorker = new CameraWorker(mIsFakeMode, this);
-    connect(mCameraWorker, &CameraWorker::newFrame, this, &MainWindow::onCameraNewFrame);
-    mCameraWorker->start();
+    mDeviceAcquisition = new DeviceAcquisitionCamera(mIsFakeMode, this);
+    connect(mDeviceAcquisition, &DeviceAcquisition::newFrame, this, &MainWindow::onCameraNewFrame);
+    mDeviceAcquisition->start();
 }
 
 MainWindow::~MainWindow()

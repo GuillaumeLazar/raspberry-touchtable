@@ -1,15 +1,15 @@
-#include "cameraworker.h"
+#include "DeviceAcquisitionCamera.h"
 
 #include <QDebug>
 
-CameraWorker::CameraWorker(bool isFakeMode, QObject *parent) :
-    QThread(parent)
+DeviceAcquisitionCamera::DeviceAcquisitionCamera(bool isFakeMode, QObject *parent) :
+    DeviceAcquisition(parent)
 {
     mIsFakeMode = isFakeMode;
 }
 
 
-void CameraWorker::run()
+void DeviceAcquisitionCamera::run()
 {
     // initialization
     if (!mIsFakeMode){
@@ -66,6 +66,6 @@ void CameraWorker::run()
         // 33   : 76% : emitter fluide : cursor slow
         // 25   : 78% : emitter fluide : cursor slow
         // none :
-        msleep(1);
+        //msleep(10);
     }
 }

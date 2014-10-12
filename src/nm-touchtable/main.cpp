@@ -1,9 +1,9 @@
 #include <QGuiApplication>
 #include <QApplication>
 #include <QCursor>
-#include <mainwindow.h>
 
-#include "qmlhandler.h"
+#include "MainWindow.h"
+#include "QmlHandler.h"
 
 
 int main(int argc, char *argv[])
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     }
 
     printf("isfakeMode: %d\n", isfakeMode);
-    printf("isMonitorMode: %d\n", isfakeMode);
+    printf("isMonitorMode: %d\n", isMonitorMode);
 
 
     if (isMonitorMode){
