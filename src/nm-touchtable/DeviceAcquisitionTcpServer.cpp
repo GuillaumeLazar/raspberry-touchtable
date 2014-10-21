@@ -8,7 +8,7 @@ DeviceAcquisitionTcpServer::DeviceAcquisitionTcpServer(QObject *parent) :
 {
     mTcpServer = new QTcpServer();
 
-    int port = 54000;
+    int port = 20140;
     if (!mTcpServer->listen(findIpAddress(), port)){
         qDebug() << "DeviceAcquisitionTcpServer failed to start!";
         return;
@@ -41,7 +41,7 @@ QHostAddress DeviceAcquisitionTcpServer::findIpAddress(){
 
 void DeviceAcquisitionTcpServer::run()
 {
-    // not used...
+
 }
 
 void DeviceAcquisitionTcpServer::onNewConnection()
