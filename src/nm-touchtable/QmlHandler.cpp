@@ -26,9 +26,9 @@ QmlHandler::QmlHandler(bool isFakeMode)
     visualItem5 = qmlWindow->findChild<QObject*>("visualItem5");
     listVisualItems.append(visualItem1);
     listVisualItems.append(visualItem2);
-    listVisualItems.append(visualItem3);
-    listVisualItems.append(visualItem4);
-    listVisualItems.append(visualItem5);
+    //listVisualItems.append(visualItem3);
+    //listVisualItems.append(visualItem4);
+    //listVisualItems.append(visualItem5);
 
     //customImageFrame = (CustomImage*) qmlWindow->findChild<QObject*>("frame");
     //customImageFrameDebug = (CustomImage*) qmlWindow->findChild<QObject*>("frameDebug");

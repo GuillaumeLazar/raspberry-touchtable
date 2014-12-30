@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,8 +14,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    devicemessage.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    devicemessage.h
 
 FORMS    += mainwindow.ui
