@@ -4,6 +4,7 @@
 #include <QtNetwork>
 
 #include "DeviceAcquisition.h"
+#include "../DeviceAcquisitionTcpClient/devicemessage.h"
 
 class DeviceAcquisitionTcpServer : public DeviceAcquisition
 {
@@ -16,6 +17,8 @@ public:
 protected:
     QTcpServer *mTcpServer;
     QTcpSocket *mTcpSocket;
+    vector<Rect> objects;
+    vector<Rect> objectsEmpty;
 
 private slots:
     void onNewConnection();

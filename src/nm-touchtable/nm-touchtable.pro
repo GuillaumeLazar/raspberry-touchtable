@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     QmlHandler.cpp \
     CustomImage.cpp \
     DeviceAcquisitionDemo.cpp \
-    DeviceAcquisitionTcpServer.cpp
+    DeviceAcquisitionTcpServer.cpp \
+    ../DeviceAcquisitionTcpClient/devicemessage.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,7 +41,8 @@ HEADERS += \
     QmlHandler.h \
     CustomImage.h \
     DeviceAcquisitionDemo.h \
-    DeviceAcquisitionTcpServer.h
+    DeviceAcquisitionTcpServer.h \
+    ../DeviceAcquisitionTcpClient/devicemessage.h
 
 
 raspi {

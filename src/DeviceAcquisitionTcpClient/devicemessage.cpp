@@ -4,6 +4,13 @@ DeviceMessage::DeviceMessage()
 {
 }
 
+DeviceMessage::DeviceMessage(const QString &json)
+{
+    QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
+    QJsonObject jsonObj = document.object();
+    this->fromJson(jsonObj);
+}
+
 void DeviceMessage::fromJson(const QJsonObject &jsonObject)
 {
     this->id = jsonObject["id"].toInt();

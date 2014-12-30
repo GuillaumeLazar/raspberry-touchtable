@@ -9,6 +9,7 @@ class DeviceMessage
 {
 public:
     DeviceMessage();
+    DeviceMessage(const QString &json);
 
     int id;
     int x;
