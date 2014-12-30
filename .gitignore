@@ -1,3 +1,9 @@
+# guillaume enhancement
+
+*bin/*
+*.directory*
+
+
 # C++ objects and libs
 
 *.slo
