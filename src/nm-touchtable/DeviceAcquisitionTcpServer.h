@@ -2,6 +2,8 @@
 #define DEVICEACQUISITIONTCPSERVER_H
 
 #include <QtNetwork>
+#include <QMutex>
+#include <QList>
 
 #include "DeviceAcquisition.h"
 #include "../DeviceAcquisitionTcpClient/devicemessage.h"
@@ -19,6 +21,10 @@ protected:
     QTcpSocket *mTcpSocket;
     vector<Rect> objects;
     vector<Rect> objectsEmpty;
+
+    QMutex mMutexList;
+    QList<DeviceMessage> mListMessage;
+
 
 private slots:
     void onNewConnection();

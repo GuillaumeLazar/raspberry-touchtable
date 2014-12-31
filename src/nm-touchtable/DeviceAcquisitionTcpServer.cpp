@@ -44,20 +44,70 @@ QHostAddress DeviceAcquisitionTcpServer::findIpAddress(){
 
 void DeviceAcquisitionTcpServer::run()
 {
+    qDebug("run()");
 
+    while(1){
+        msleep(5);
+        //qDebug("unstack...");
+
+        mMutexList.lock();
+
+
+
+        if (!mListMessage.isEmpty()){
+            qDebug() << "list size is: " << mListMessage.size();
+
+            DeviceMessage message = mListMessage.takeFirst();
+
+            switch (message.state) {
+                case 1:
+
+                    //TODO : bad hardcoded 0 here, it should be message.id
+                    objects[0].x = message.x;
+                    objects[0].y = message.y;
+
+                    emit touchPress(message.x, message.y);
+                    emit newFrame(&objects);
+                    break;
+
+                case 2:
+
+                    //TODO : bad hardcoded 0 here, it should be message.id
+                    objects[0].x = message.x;
+                    objects[0].y = message.y;
+
+                    emit touchPress(message.x, message.y);
+                    emit newFrame(&objects);
+                    break;
+
+                case 3:
+                    emit touchRelease(message.x, message.y);
+                    emit newFrame(&objectsEmpty);
+                    break;
+
+                default:
+                    break;
+            }
+
+
+        }
+
+        mMutexList.unlock();
+    }
 }
 
 void DeviceAcquisitionTcpServer::onNewConnection()
 {
     qDebug("onNewConnection()");
     mTcpSocket = mTcpServer->nextPendingConnection();
+    mTcpSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(mTcpSocket, &QTcpSocket::readyRead, this, &DeviceAcquisitionTcpServer::onSocketReadyRead);
     emit newFrame(&objectsEmpty);
 }
 
 void DeviceAcquisitionTcpServer::onSocketReadyRead()
 {
-    qDebug("onSocketReadyRead()");
+    //qDebug("onSocketReadyRead()");
     QByteArray data = mTcpSocket->readAll();
 
     QStringList jsonDocList = QString(data).split('}', QString::SkipEmptyParts);
@@ -67,38 +117,11 @@ void DeviceAcquisitionTcpServer::onSocketReadyRead()
 
         DeviceMessage message(jsonDoc);
 
+        mMutexList.lock();
+        mListMessage.append(message);
+        mMutexList.unlock();
 
-        switch (message.state) {
-            case 1:
-
-                //TODO : bad hardcoded 0 here, it should be message.id
-                objects[0].x = message.x;
-                objects[0].y = message.y;
-
-                emit touchPress(message.x, message.y);
-                emit newFrame(&objects);
-                break;
-
-            case 2:
-
-                //TODO : bad hardcoded 0 here, it should be message.id
-                objects[0].x = message.x;
-                objects[0].y = message.y;
-
-                emit touchPress(message.x, message.y);
-                emit newFrame(&objects);
-                break;
-
-            case 3:
-                emit touchRelease(message.x, message.y);
-                emit newFrame(&objectsEmpty);
-                break;
-
-            default:
-                break;
-        }
-
-        //qDebug("%s", jsonDoc.toStdString().c_str());
+        qDebug("%s", jsonDoc.toStdString().c_str());
     }
 
 }
