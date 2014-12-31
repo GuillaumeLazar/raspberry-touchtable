@@ -19,9 +19,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&mTcpClient, &QTcpSocket::connected, this, &MainWindow::onConnected);
 
     qDebug() << "Try to connect...";
+
+    // Tower
     //QString serverIp = "192.168.1.21";
-    //QString serverIp = "192.168.1.2";
-    QString serverIp = "192.168.1.10";
+
+    // Raspberry
+    QString serverIp = "192.168.1.2";
+
+    // Laptop
+    //QString serverIp = "192.168.1.10";
+
     mTcpClient.connectToHost(serverIp, 20140);
     mTcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 

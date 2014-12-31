@@ -26,9 +26,9 @@ QmlHandler::QmlHandler(bool isFakeMode)
     visualItem5 = qmlWindow->findChild<QObject*>("visualItem5");
     listVisualItems.append(visualItem1);
     listVisualItems.append(visualItem2);
-    //listVisualItems.append(visualItem3);
-    //listVisualItems.append(visualItem4);
-    //listVisualItems.append(visualItem5);
+    listVisualItems.append(visualItem3);
+    listVisualItems.append(visualItem4);
+    listVisualItems.append(visualItem5);
 
     //customImageFrame = (CustomImage*) qmlWindow->findChild<QObject*>("frame");
     //customImageFrameDebug = (CustomImage*) qmlWindow->findChild<QObject*>("frameDebug");
@@ -58,33 +58,32 @@ QmlHandler::QmlHandler(bool isFakeMode)
 void QmlHandler::onTouchPress(int x, int y)
 {
     //qDebug() <<  "\nonTouchPress: " << x << " x " << y;
-    QTest::mousePress((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
+    //QTest::mousePress((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
 }
 
 void QmlHandler::onTouchMove(int x, int y)
 {
     //qDebug() <<  "...onTouchMove: " << x << " x " << y;
-    QTest::mouseMove((QWindow*)qmlWindow, QPoint(x, y));
+    //QTest::mouseMove((QWindow*)qmlWindow, QPoint(x, y));
 }
 
 void QmlHandler::onTouchRelease(int x, int y)
 {
     //qDebug() <<  "onTouchRelease: " << x << " x " << y;
-    QTest::mouseRelease((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
+    //QTest::mouseRelease((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, QPoint(x, y));
 }
 
 void QmlHandler::onCameraNewFrame(vector<Rect>* objects)
 {
     textinfo->setProperty("text", QString("objects count: %1").arg(objects->size()));
 
-    // first is processed by mouse way
-    for (int i = 1; i < listVisualItems.size(); ++i) {
+    // first is processed by mouse way (wrong -> old slow way)
+    for (int i = 0; i < listVisualItems.size(); ++i) {
 
         QObject *visualItem = listVisualItems.at(i);
 
         if (objects->size() > i){
             Rect objectBounds = objects->at(i);
-
             updateVisualItem(visualItem, true, &objectBounds);
         }else{
             updateVisualItem(visualItem, false, NULL);
@@ -108,7 +107,7 @@ void QmlHandler::updateVisualItem(QObject *visualItem, bool visible, Rect *objec
         visualItem->setProperty("emitter_x", x);
         visualItem->setProperty("emitter_y", y);
         visualItem->setProperty("emitter_enabled", true);
-        visualItem->setProperty("emitter_emitRate", 100);
+        visualItem->setProperty("emitter_emitRate", 100); //100
     }else{
         visualItem->setProperty("emitter_enabled", false);
         visualItem->setProperty("emitter_emitRate", 0);

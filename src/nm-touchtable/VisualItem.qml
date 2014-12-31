@@ -15,7 +15,7 @@ ParticleSystem {
         emitRate: emitter_emitRate
         width: 16
         height: 16
-        lifeSpan: 5000
+        lifeSpan: 5000 //5000
         size: 16
         sizeVariation: 8
         //lifeSpanVariation: 500
@@ -34,8 +34,8 @@ ParticleSystem {
 
         acceleration: AngleDirection {
             angleVariation: 360;
-            magnitude: 20;
-            magnitudeVariation: 50
+            magnitude: 60; //20
+            magnitudeVariation: 50 //50
 
         }
         /*

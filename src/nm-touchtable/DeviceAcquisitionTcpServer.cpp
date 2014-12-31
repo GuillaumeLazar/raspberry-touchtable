@@ -6,7 +6,7 @@
 DeviceAcquisitionTcpServer::DeviceAcquisitionTcpServer(QObject *parent) :
     DeviceAcquisition(parent)
 {
-    objects = vector<Rect>(1);
+    objects = vector<Rect>(5);
     objectsEmpty = vector<Rect>(0);
 
     mTcpServer = new QTcpServer();
@@ -55,7 +55,7 @@ void DeviceAcquisitionTcpServer::run()
 
 
         if (!mListMessage.isEmpty()){
-            qDebug() << "list size is: " << mListMessage.size();
+            //qDebug() << "list size is: " << mListMessage.size();
 
             DeviceMessage message = mListMessage.takeFirst();
 
@@ -63,8 +63,20 @@ void DeviceAcquisitionTcpServer::run()
                 case 1:
 
                     //TODO : bad hardcoded 0 here, it should be message.id
-                    objects[0].x = message.x;
-                    objects[0].y = message.y;
+                    objects[0].x = message.x / 4.0f;
+                    objects[0].y = message.y / 3.33f;
+
+                    objects[1].x = (message.x - 50) / 4.0f;
+                    objects[1].y = message.y / 3.33f;
+
+                    objects[2].x = (message.x + 50) / 4.0f;
+                    objects[2].y = message.y / 3.33f;
+
+                    objects[3].x = message.x / 4.0f;
+                    objects[3].y = (message.y + 50) / 3.33f;
+
+                    objects[4].x = message.x / 4.0f;
+                    objects[4].y = (message.y - 50) / 3.33f;
 
                     emit touchPress(message.x, message.y);
                     emit newFrame(&objects);
@@ -73,8 +85,20 @@ void DeviceAcquisitionTcpServer::run()
                 case 2:
 
                     //TODO : bad hardcoded 0 here, it should be message.id
-                    objects[0].x = message.x;
-                    objects[0].y = message.y;
+                    objects[0].x = message.x / 4.0f;
+                    objects[0].y = message.y / 3.33f;
+
+                    objects[1].x = (message.x + 50) / 4.0f;
+                    objects[1].y = message.y / 3.33f;
+
+                    objects[2].x = (message.x + 100) / 4.0f;
+                    objects[2].y = message.y / 3.33f;
+
+                    objects[3].x = message.x / 4.0f;
+                    objects[3].y = (message.y + 50) / 3.33f;
+
+                    objects[4].x = message.x / 4.0f;
+                    objects[4].y = (message.y - 50) / 3.33f;
 
                     emit touchPress(message.x, message.y);
                     emit newFrame(&objects);
@@ -83,6 +107,7 @@ void DeviceAcquisitionTcpServer::run()
                 case 3:
                     emit touchRelease(message.x, message.y);
                     emit newFrame(&objectsEmpty);
+                    //emit newFrame(&objects);
                     break;
 
                 default:
@@ -121,7 +146,7 @@ void DeviceAcquisitionTcpServer::onSocketReadyRead()
         mListMessage.append(message);
         mMutexList.unlock();
 
-        qDebug("%s", jsonDoc.toStdString().c_str());
+        //qDebug("%s", jsonDoc.toStdString().c_str());
     }
 
 }

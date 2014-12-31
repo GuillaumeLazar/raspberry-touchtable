@@ -21,12 +21,12 @@ Window {
         id: visualItem1
         objectName: "visualItem1"
         anchors.fill: parent
-        emitter_x: mouseArea.mouseX
-        emitter_y: mouseArea.mouseY
-        emitter_emitRate: mouseArea.pressed ? 100 : 0
-//        emitter_x: 0
-//        emitter_y: 0
-//        emitter_emitRate: 0
+//        emitter_x: mouseArea.mouseX
+//        emitter_y: mouseArea.mouseY
+//        emitter_emitRate: mouseArea.pressed ? 100 : 0
+        emitter_x: 0
+        emitter_y: 0
+        emitter_emitRate: 0
     }
 
     VisualItem{
