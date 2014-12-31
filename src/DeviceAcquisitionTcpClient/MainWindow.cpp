@@ -12,16 +12,21 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mMessageId = 0;
 
     //connect(&mTimer, &QTimer::timeout, this, &MainWindow::onTimer);
     connect(&mTimer, &QTimer::timeout, this, &MainWindow::onTimer);
     connect(&mTcpClient, &QTcpSocket::connected, this, &MainWindow::onConnected);
 
     qDebug() << "Try to connect...";
-    mTcpClient.connectToHost("192.168.1.21", 20140);
+    //QString serverIp = "192.168.1.21";
+    //QString serverIp = "192.168.1.2";
+    QString serverIp = "192.168.1.10";
+    mTcpClient.connectToHost(serverIp, 20140);
+    mTcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
 
-    //mTimer.start(1000);
+    //mTimer.start(20);
 }
 
 MainWindow::~MainWindow()
@@ -31,7 +36,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::onTimer()
 {
-    qDebug() << "onTimer !";
+    //qDebug() << "onTimer !";
+    //mTcpClient.flush();
 }
 
 void MainWindow::onConnected()
@@ -55,7 +61,7 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
     if (y < 0){ y = 0;}
 
     DeviceMessage deviceMessage;
-    deviceMessage.id = 0;
+    deviceMessage.id = mMessageId;
     deviceMessage.x = x;
     deviceMessage.y = y;
     deviceMessage.state = 1;
@@ -74,7 +80,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event)
     if (y < 0){ y = 0;}
 
     DeviceMessage deviceMessage;
-    deviceMessage.id = 0;
+    deviceMessage.id = mMessageId;
     deviceMessage.x = x;
     deviceMessage.y = y;
     deviceMessage.state = 2;
@@ -84,6 +90,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event)
 
 void MainWindow::mouseReleaseEvent(QMouseEvent* event)
 {
+
     int x = event->x();
     int y = event->y();
 
@@ -92,7 +99,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent* event)
     if (y < 0){ y = 0;}
 
     DeviceMessage deviceMessage;
-    deviceMessage.id = 0;
+    deviceMessage.id = mMessageId;
     deviceMessage.x = x;
     deviceMessage.y = y;
     deviceMessage.state = 3;
@@ -102,8 +109,11 @@ void MainWindow::mouseReleaseEvent(QMouseEvent* event)
 
 void MainWindow::sendDataToServer(QString data)
 {
-    qDebug() << qPrintable(data);
-    mTcpClient.write(data.toStdString().c_str());
+
+    qint64 returnValue = mTcpClient.write(data.toStdString().c_str());
+    qDebug() << qPrintable(data) << " (" << returnValue << "/" << data.size() << ")";
+    mMessageId++;
+
 }
 
 

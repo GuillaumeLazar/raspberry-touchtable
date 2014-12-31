@@ -33,6 +33,7 @@ private:
     Ui::MainWindow *ui;
     QTimer mTimer;
     QTcpSocket mTcpClient;
+    int mMessageId;
 
 public slots:
     void onTimer();
