@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     DeviceAcquisitionDemo.cpp \
     DeviceAcquisition.cpp \
     deviceacquisitionmanager.cpp \
-    ../DeviceAcquisitionTcpClient/devicemessage.cpp
+    ../DeviceAcquisitionTcpClient/devicemessage.cpp \
+    ../DeviceAcquisitionTcpClient/devicemessageobject.cpp
 
 OTHER_FILES += \
     nm-touchtable-camera.pro.user
@@ -32,7 +33,8 @@ HEADERS += \
     DeviceAcquisitionDemo.h \
     DeviceAcquisition.h \
     deviceacquisitionmanager.h \
-    ../DeviceAcquisitionTcpClient/devicemessage.h
+    ../DeviceAcquisitionTcpClient/devicemessage.h \
+    ../DeviceAcquisitionTcpClient/devicemessageobject.h
 
 raspi {
     LIBS += \

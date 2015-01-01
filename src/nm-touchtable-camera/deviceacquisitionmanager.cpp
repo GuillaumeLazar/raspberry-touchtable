@@ -7,12 +7,16 @@ DeviceAcquisitionManager::DeviceAcquisitionManager(int argc, char *argv[])
         qDebug() << QString(" [%1] %2").arg(i).arg(argv[i]);
     }
 
-    QString serverIp = "192.168.1.18";
+    mMessageId = 0;
+
+    // tower-linux
+    QString serverIp = "192.168.1.21";
+
     mTcpClient.connectToHost(serverIp, 20140);
     mTcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
-    //mDeviceAcquisition = new DeviceAcquisitionDemo();
-    mDeviceAcquisition = new DeviceAcquisitionCamera(false);
+    mDeviceAcquisition = new DeviceAcquisitionDemo();
+    //mDeviceAcquisition = new DeviceAcquisitionCamera(false);
 
     connect(mDeviceAcquisition, &DeviceAcquisition::touchPress, this, &DeviceAcquisitionManager::onTouchPress);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchMove, this, &DeviceAcquisitionManager::onTouchMove);
@@ -47,6 +51,7 @@ void DeviceAcquisitionManager::onNewFrame(vector<Rect>* objects)
     }
     */
 
+    /*
     if (objects->size() > 0){
         Rect objectBounds = objects->at(0);
 
@@ -67,8 +72,25 @@ void DeviceAcquisitionManager::onNewFrame(vector<Rect>* objects)
 
         sendDataToServer(deviceMessage.serializeToJson());
     }
+    */
 
-    //qDebug();
+    DeviceMessage deviceMessage;
+    deviceMessage.id = mMessageId;
+
+    for (int i = 0; i < objects->size(); ++i) {
+        DeviceMessageObject deviceObject;
+        Rect objectBounds = objects->at(i);
+
+        deviceObject.x = objectBounds.x;
+        deviceObject.y = objectBounds.y;
+        deviceObject.width = objectBounds.width;
+        deviceObject.height = objectBounds.height;
+
+        deviceMessage.objects.append(deviceObject);
+    }
+
+
+    qDebug() << deviceMessage.serializeToJson();
 }
 
 void DeviceAcquisitionManager::onConnected()

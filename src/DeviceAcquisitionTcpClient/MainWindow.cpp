@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //QString serverIp = "192.168.1.21";
 
     // Raspberry (nm-touchable-display)
-    QString serverIp = "192.168.1.18";
+    QString serverIp = "192.168.1.108";
 
     // Laptop
     //QString serverIp = "192.168.1.10";
@@ -69,11 +69,15 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
 
     DeviceMessage deviceMessage;
     deviceMessage.id = mMessageId;
-    deviceMessage.x = x;
-    deviceMessage.y = y;
-    deviceMessage.state = 1;
 
-    qDebug();
+    DeviceMessageObject obj1;
+    obj1.x = x;
+    obj1.y = y;
+    obj1.width = 0;
+    obj1.height = 0;
+    obj1.state = 1;
+    deviceMessage.objects.append(obj1);
+
     sendDataToServer(deviceMessage.serializeToJson());
 }
 
@@ -88,9 +92,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event)
 
     DeviceMessage deviceMessage;
     deviceMessage.id = mMessageId;
-    deviceMessage.x = x;
-    deviceMessage.y = y;
-    deviceMessage.state = 2;
+
+    DeviceMessageObject obj1;
+    obj1.x = x;
+    obj1.y = y;
+    obj1.width = 0;
+    obj1.height = 0;
+    obj1.state = 2;
+    deviceMessage.objects.append(obj1);
 
     sendDataToServer(deviceMessage.serializeToJson());
 }
@@ -107,18 +116,16 @@ void MainWindow::mouseReleaseEvent(QMouseEvent* event)
 
     DeviceMessage deviceMessage;
     deviceMessage.id = mMessageId;
-    deviceMessage.x = x;
-    deviceMessage.y = y;
-    deviceMessage.state = 3;
 
     sendDataToServer(deviceMessage.serializeToJson());
 }
 
 void MainWindow::sendDataToServer(QString data)
 {
-
-    qint64 returnValue = mTcpClient.write(data.toStdString().c_str());
-    qDebug() << qPrintable(data) << " (" << returnValue << "/" << data.size() << ")";
+    QString dataAndSeparator;
+    dataAndSeparator = QString("%1*").arg(data);
+    qint64 returnValue = mTcpClient.write(dataAndSeparator.toStdString().c_str());
+    qDebug() << qPrintable(dataAndSeparator) << " (" << returnValue << "/" << dataAndSeparator.size() << ")";
     mMessageId++;
 
 }

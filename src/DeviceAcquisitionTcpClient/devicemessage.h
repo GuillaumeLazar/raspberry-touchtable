@@ -2,8 +2,12 @@
 #define DEVICEMESSAGE_H
 
 #include <QString>
+#include <QList>
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+
+#include "devicemessageobject.h"
 
 class DeviceMessage
 {
@@ -11,25 +15,12 @@ public:
     DeviceMessage();
     DeviceMessage(const QString &json);
 
-    int id;
-    int x;
-    int y;
-
-    //0: unknown
-    //1: press
-    //2: move
-    //3: release
-    int state;
-
-    // TODO
-    //int width;
-    //int height;
-
     void fromJson(const QJsonObject &jsonObject);
     void toJson(QJsonObject &jsonObject) const;
+    QString serializeToJson(QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Compact) const;
 
-    QString serializeToJson() const;
-
+    int id;
+    QList<DeviceMessageObject> objects;
 };
 
 #endif // DEVICEMESSAGE_H

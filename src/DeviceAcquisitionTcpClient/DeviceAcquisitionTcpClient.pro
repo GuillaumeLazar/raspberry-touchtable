@@ -15,9 +15,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         MainWindow.cpp \
-    devicemessage.cpp
+    devicemessage.cpp \
+    devicemessageobject.cpp
 
 HEADERS  += MainWindow.h \
-    devicemessage.h
+    devicemessage.h \
+    devicemessageobject.h
 
 FORMS    += mainwindow.ui

@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     CustomImage.cpp \
     DeviceAcquisitionDemo.cpp \
     DeviceAcquisitionTcpServer.cpp \
-    ../DeviceAcquisitionTcpClient/devicemessage.cpp
+    ../DeviceAcquisitionTcpClient/devicemessage.cpp \
+    ../DeviceAcquisitionTcpClient/devicemessageobject.cpp
 
 RESOURCES += qml.qrc
 
@@ -42,7 +43,8 @@ HEADERS += \
     CustomImage.h \
     DeviceAcquisitionDemo.h \
     DeviceAcquisitionTcpServer.h \
-    ../DeviceAcquisitionTcpClient/devicemessage.h
+    ../DeviceAcquisitionTcpClient/devicemessage.h \
+    ../DeviceAcquisitionTcpClient/devicemessageobject.h
 
 
 raspi {
