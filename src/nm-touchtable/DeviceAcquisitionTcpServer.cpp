@@ -6,7 +6,7 @@
 DeviceAcquisitionTcpServer::DeviceAcquisitionTcpServer(QObject *parent) :
     DeviceAcquisition(parent)
 {
-    objects = vector<Rect>(5);
+    objects = vector<Rect>(1);
     objectsEmpty = vector<Rect>(0);
 
     mTcpServer = new QTcpServer();
@@ -66,17 +66,17 @@ void DeviceAcquisitionTcpServer::run()
                     objects[0].x = message.x / 4.0f;
                     objects[0].y = message.y / 3.33f;
 
-                    objects[1].x = (message.x - 50) / 4.0f;
-                    objects[1].y = message.y / 3.33f;
+//                    objects[1].x = (message.x - 50) / 4.0f;
+//                    objects[1].y = message.y / 3.33f;
 
-                    objects[2].x = (message.x + 50) / 4.0f;
-                    objects[2].y = message.y / 3.33f;
+//                    objects[2].x = (message.x + 50) / 4.0f;
+//                    objects[2].y = message.y / 3.33f;
 
-                    objects[3].x = message.x / 4.0f;
-                    objects[3].y = (message.y + 50) / 3.33f;
+//                    objects[3].x = message.x / 4.0f;
+//                    objects[3].y = (message.y + 50) / 3.33f;
 
-                    objects[4].x = message.x / 4.0f;
-                    objects[4].y = (message.y - 50) / 3.33f;
+//                    objects[4].x = message.x / 4.0f;
+//                    objects[4].y = (message.y - 50) / 3.33f;
 
                     emit touchPress(message.x, message.y);
                     emit newFrame(&objects);
@@ -88,17 +88,17 @@ void DeviceAcquisitionTcpServer::run()
                     objects[0].x = message.x / 4.0f;
                     objects[0].y = message.y / 3.33f;
 
-                    objects[1].x = (message.x + 50) / 4.0f;
-                    objects[1].y = message.y / 3.33f;
+//                    objects[1].x = (message.x + 50) / 4.0f;
+//                    objects[1].y = message.y / 3.33f;
 
-                    objects[2].x = (message.x + 100) / 4.0f;
-                    objects[2].y = message.y / 3.33f;
+//                    objects[2].x = (message.x + 100) / 4.0f;
+//                    objects[2].y = message.y / 3.33f;
 
-                    objects[3].x = message.x / 4.0f;
-                    objects[3].y = (message.y + 50) / 3.33f;
+//                    objects[3].x = message.x / 4.0f;
+//                    objects[3].y = (message.y + 50) / 3.33f;
 
-                    objects[4].x = message.x / 4.0f;
-                    objects[4].y = (message.y - 50) / 3.33f;
+//                    objects[4].x = message.x / 4.0f;
+//                    objects[4].y = (message.y - 50) / 3.33f;
 
                     emit touchPress(message.x, message.y);
                     emit newFrame(&objects);

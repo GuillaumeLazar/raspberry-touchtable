@@ -21,6 +21,10 @@ public:
     //3: release
     int state;
 
+    // TODO
+    //int width;
+    //int height;
+
     void fromJson(const QJsonObject &jsonObject);
     void toJson(QJsonObject &jsonObject) const;
 

@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Tower
     //QString serverIp = "192.168.1.21";
 
-    // Raspberry
-    QString serverIp = "192.168.1.2";
+    // Raspberry (nm-touchable-display)
+    QString serverIp = "192.168.1.18";
 
     // Laptop
     //QString serverIp = "192.168.1.10";
