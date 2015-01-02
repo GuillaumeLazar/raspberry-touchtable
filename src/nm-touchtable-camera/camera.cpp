@@ -71,17 +71,18 @@ void processFrame(int, void*)
     int THRESHOLD_SIZE = 9;     //15  //10 ko
     int THRESHOLD_C = -8;        //-8
 
-    // original to grayscale
+    // original to grayscale (4ms)
     cvtColor(frame, frameGray, CV_BGR2GRAY);
 
-    // horizontal flip
+    // horizontal flip (<1ms)
     flip(frameGray, frameGray, 1);
 
-    // extract roi
+    // extract roi (<1ms)
     frameROI = frameGray(roi).clone();
 
+
     //DEBUG
-    resize(frameROI, frameDebugRoi, Size(320, 240));
+    //resize(frameROI, frameDebugRoi, Size(320, 240));
 
     //printf("isBalanceDone  = %d\n", isBalanceDone);
     if (!isBalanceDone ){
@@ -115,27 +116,35 @@ void processFrame(int, void*)
         printf("SAVE frame.jpg\n");
     }
 
+
+    // 1ms
     GaussianBlur(frameROI, frameROI, cv::Size(BLUR_SIZE, BLUR_SIZE), BLUR_SIGMA, BLUR_SIGMA);
+
+    // 1ms
     absdiff(frameROI, frameBalance, frameROI);
 
-    // DEBUG
-    resize(frameROI, frameDebugBalance, Size(320, 240));
 
-    // binary
+    // DEBUG
+    //resize(frameROI, frameDebugBalance, Size(320, 240));
+
+    // binary (1ms)
     adaptiveThreshold(frameROI, frameROI, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, THRESHOLD_SIZE, THRESHOLD_C);
     //threshold(frameROI, frameROI, 15, 255, THRESH_BINARY);
 
-    // dilate + erode
+
+    // dilate(6ms) + erode
     //erode(frameROI, frameROI, dummyMat, Point(-1, -1), 1);
-    dilate(frameROI, frameROI, dummyMat, Point(-1, -1), 2);
+    //dilate(frameROI, frameROI, dummyMat, Point(-1, -1), 2);
+
 
     // DEBUG
-    resize(frameROI, frameDebug, Size(320, 240));
+    //resize(frameROI, frameDebug, Size(320, 240));
 
-    // resize
+    // resize (3ms)
     resize(frameROI, frameROI, Size(320, 240));
 
-    // find contours
+
+    // find contours (5ms)
     frameContours = frameROI;//.clone();
     findContours(frameContours, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0,0));
     vector<vector<Point> > contours_poly( contours.size() );

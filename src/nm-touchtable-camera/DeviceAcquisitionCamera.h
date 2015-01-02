@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <QThread>
+#include <QTime>
 
 #include "DeviceAcquisition.h"
 

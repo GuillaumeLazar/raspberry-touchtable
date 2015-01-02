@@ -11,6 +11,10 @@ DeviceAcquisitionCamera::DeviceAcquisitionCamera(bool isFakeMode, QObject *paren
 
 void DeviceAcquisitionCamera::run()
 {
+
+
+
+
     // initialization
     if (!mIsFakeMode){
         initCamera();
@@ -18,14 +22,27 @@ void DeviceAcquisitionCamera::run()
         initFakeCamera();
     }
 
+
+
     // main loop
     while(1){
+
 
         bool isNewFrame = false;
         isNewFrame = acqFrameFromCamera();
 
+
+
         if (isNewFrame){
+
+//            QTime timer;
+//            timer.start();
+
+            // 15-20ms
              processFrame(0, 0);
+
+//             int v = timer.elapsed();
+//             qDebug() << qPrintable( QString("elapsed: %1 ms").arg(v) );
 
              //---------------------------------------
              //find objects
@@ -58,14 +75,8 @@ void DeviceAcquisitionCamera::run()
              }
 
              emit newFrame(objects);
-        }
 
-        // 1000 : 53% : emitter fluide
-        // 100  : 56% : emitter fluide
-        // 40   : 74% : emitter fluide
-        // 33   : 76% : emitter fluide : cursor slow
-        // 25   : 78% : emitter fluide : cursor slow
-        // none :
-        //msleep(10);
+
+        }
     }
 }

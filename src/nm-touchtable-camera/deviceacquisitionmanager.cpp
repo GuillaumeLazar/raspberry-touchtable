@@ -15,7 +15,7 @@ DeviceAcquisitionManager::DeviceAcquisitionManager(int argc, char *argv[])
     //QString serverIp = "192.168.1.21";
 
     // Raspberry (nm-touchable-display)
-    QString serverIp = "192.168.1.108";
+    QString serverIp = "192.168.1.107";
 
     mTcpClient.connectToHost(serverIp, 20140);
     mTcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -81,6 +81,10 @@ void DeviceAcquisitionManager::sendDataToServer(QString data)
     QString dataAndSeparator;
     dataAndSeparator = QString("%1*").arg(data);
     qint64 returnValue = mTcpClient.write(dataAndSeparator.toStdString().c_str());
+
+    if (returnValue == -1){
+        qDebug() << "Error nm-touchtable-display is offline!";
+    }
     //qDebug() << qPrintable(dataAndSeparator) << " (" << returnValue << "/" << dataAndSeparator.size() << ")";
     mMessageId++;
 
