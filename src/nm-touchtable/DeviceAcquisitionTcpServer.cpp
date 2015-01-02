@@ -47,7 +47,7 @@ void DeviceAcquisitionTcpServer::run()
     qDebug("run()");
 
     while(1){
-        msleep(5);
+        //msleep(5);
 
         mMutexList.lock();
 
