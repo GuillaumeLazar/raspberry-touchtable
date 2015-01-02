@@ -7,7 +7,6 @@
 QmlHandler::QmlHandler(bool isFakeMode)
 {
     mIsFakeMode = isFakeMode;
-    //connect(&mTimer, &QTimer::timeout, this, &QmlHandler::onTimer);
 
     qmlRegisterType<CustomImage>("CustomImage", 1, 0, "CustomImage");
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
@@ -17,7 +16,6 @@ QmlHandler::QmlHandler(bool isFakeMode)
     emitter = qmlWindow->findChild<QObject*>("emitter");
     mouseArea = qmlWindow->findChild<QObject*>("mouseArea");
     textinfo = qmlWindow->findChild<QObject*>("textinfo");
-
 
     visualItem1 = qmlWindow->findChild<QObject*>("visualItem1");
     visualItem2 = qmlWindow->findChild<QObject*>("visualItem2");
@@ -29,9 +27,6 @@ QmlHandler::QmlHandler(bool isFakeMode)
     listVisualItems.append(visualItem3);
     listVisualItems.append(visualItem4);
     listVisualItems.append(visualItem5);
-
-    //customImageFrame = (CustomImage*) qmlWindow->findChild<QObject*>("frame");
-    //customImageFrameDebug = (CustomImage*) qmlWindow->findChild<QObject*>("frameDebug");
 
     mCptUpdate = 0;
 
@@ -47,7 +42,6 @@ QmlHandler::QmlHandler(bool isFakeMode)
     //mDeviceAcquisition = new DeviceAcquisitionDemo(this);
     mDeviceAcquisition = new DeviceAcquisitionTcpServer(this);
 
-    //connect(mCameraWorker, &CameraWorker::newPosition, this, &QmlHandler::onCameraNewPosition);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchPress, this, &QmlHandler::onTouchPress);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchMove, this, &QmlHandler::onTouchMove);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchRelease, this, &QmlHandler::onTouchRelease);
@@ -75,7 +69,7 @@ void QmlHandler::onTouchRelease(int x, int y)
 
 void QmlHandler::onCameraNewFrame(vector<Rect>* objects)
 {
-    textinfo->setProperty("text", QString("objects count: %1").arg(objects->size()));
+    textinfo->setProperty("text", QString("%1").arg(objects->size()));
 
     // first is processed by mouse way (wrong -> old slow way)
     for (int i = 0; i < listVisualItems.size(); ++i) {
@@ -113,43 +107,3 @@ void QmlHandler::updateVisualItem(QObject *visualItem, bool visible, Rect *objec
         visualItem->setProperty("emitter_emitRate", 0);
     }
 }
-
-/*
-void QmlHandler::onCameraNewPosition(int x, int y)
-{
-    //printf("onCameraNewPosition(%d; %d) \n", x, y);
-    mMutexPoisition.lock();
-    mIsPositionUpdated = true;
-    mPositionX = x;
-    mPositionY = y;
-    mMutexPoisition.unlock();
-}
-
-void QmlHandler::onTimer()
-{
-    int x = 0;
-    int y = 0;
-    bool positionUpdated = false;
-
-    mMutexPoisition.lock();
-
-    positionUpdated = mIsPositionUpdated;
-    x = mPositionX;
-    y = mPositionY;
-    mIsPositionUpdated = false;
-
-    mMutexPoisition.unlock();
-
-    //if (positionUpdated){
-
-    QPoint pos(x, y);
-    QTest::mouseClick((QWindow*)qmlWindow, Qt::LeftButton, Qt::NoModifier, pos);
-
-        //cursor->setProperty("x", x);
-        //cursor->setProperty("y", y);
-
-        //emitter->setProperty("x", x);
-        //emitter->setProperty("y", y);
-    //}
-}
-*/

@@ -23,14 +23,6 @@ ParticleSystem {
 
         enabled: emitter_enabled
 
-        /*
-        velocity: AngleDirection {
-            angle: 0
-            //angleVariation: 15
-            magnitude: 100
-            //magnitudeVariation: 50
-        }
-        */
 
         acceleration: AngleDirection {
             angleVariation: 360;
@@ -38,40 +30,10 @@ ParticleSystem {
             magnitudeVariation: 50 //50
 
         }
-        /*
-        velocity: TargetDirection {
-            targetItem: attractCenter
-            magnitude: 100.0
-            targetVariation: 100.0
-        }
-        */
 
-        //velocity: PointDirection {x: root.width/10; y: root.height/10;}
-        //acceleration: PointDirection {x: -root.width/40; y: -root.height/40; xVariation: -root.width/20; yVariation: -root.width/20}
-
-        //velocity: PointDirection {xVariation: 4; yVariation: 4;}
-        //acceleration: PointDirection {xVariation: 10; yVariation: 10;}
-        //velocityFromMovement: 8
     }
-
-    /*
-    Attractor {
-        id: attractCenter
-        x: window1.width / 2
-        y: window1.height / 2
-        width: 16
-        height: 16
-        system: parent
-        pointX: 0
-        pointY: 0
-        strength: 10.0
-    }
-    */
-
-
 
     CustomParticle {
-
 
         fragmentShader: "
             varying highp vec2 position;
@@ -88,7 +50,6 @@ ParticleSystem {
                 highp float red = dX;
                 highp float green = 1.0 - dX;
                 highp float blue = dY;
-
 
 //                if (lifespan > 5.0f){
 //                    red = 1.0f;

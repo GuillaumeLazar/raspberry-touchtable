@@ -27,7 +27,6 @@ private:
     void updateVisualItem(QObject *visualItem, bool visible, Rect *objectBounds);
 
     QQmlApplicationEngine engine;
-    QTimer mTimer;
 
     QObject *cursor;
     QObject *emitter;
@@ -41,10 +40,6 @@ private:
     QObject *visualItem4;
     QObject *visualItem5;
     QList<QObject*> listVisualItems;
-
-    //CustomImage *customImageFrame;
-    //CustomImage *customImageFrameRoi;
-    //CustomImage *customImageFrameDebug;
 
     bool isCameraFound;
     bool mIsFakeMode;
