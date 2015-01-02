@@ -48,14 +48,11 @@ void DeviceAcquisitionTcpServer::run()
 
     while(1){
         msleep(5);
-        //qDebug("unstack...");
 
         mMutexList.lock();
 
-
-
         if (!mListMessage.isEmpty()){
-            qDebug() << "list size is: " << mListMessage.size();
+            //qDebug() << "list size is: " << mListMessage.size();
 
             DeviceMessage message = mListMessage.takeFirst();
 
@@ -70,63 +67,6 @@ void DeviceAcquisitionTcpServer::run()
             }
 
             emit newFrame(&objects);
-
-            /*
-            switch (message.state) {
-                case 1:
-
-                    //TODO : bad hardcoded 0 here, it should be message.id
-                    objects[0].x = message.x / 4.0f;
-                    objects[0].y = message.y / 3.33f;
-
-//                    objects[1].x = (message.x - 50) / 4.0f;
-//                    objects[1].y = message.y / 3.33f;
-
-//                    objects[2].x = (message.x + 50) / 4.0f;
-//                    objects[2].y = message.y / 3.33f;
-
-//                    objects[3].x = message.x / 4.0f;
-//                    objects[3].y = (message.y + 50) / 3.33f;
-
-//                    objects[4].x = message.x / 4.0f;
-//                    objects[4].y = (message.y - 50) / 3.33f;
-
-                    emit touchPress(message.x, message.y);
-                    emit newFrame(&objects);
-                    break;
-
-                case 2:
-
-                    //TODO : bad hardcoded 0 here, it should be message.id
-                    objects[0].x = message.x / 4.0f;
-                    objects[0].y = message.y / 3.33f;
-
-//                    objects[1].x = (message.x + 50) / 4.0f;
-//                    objects[1].y = message.y / 3.33f;
-
-//                    objects[2].x = (message.x + 100) / 4.0f;
-//                    objects[2].y = message.y / 3.33f;
-
-//                    objects[3].x = message.x / 4.0f;
-//                    objects[3].y = (message.y + 50) / 3.33f;
-
-//                    objects[4].x = message.x / 4.0f;
-//                    objects[4].y = (message.y - 50) / 3.33f;
-
-                    emit touchPress(message.x, message.y);
-                    emit newFrame(&objects);
-                    break;
-
-                case 3:
-                    emit touchRelease(message.x, message.y);
-                    emit newFrame(&objectsEmpty);
-                    //emit newFrame(&objects);
-                    break;
-
-                default:
-                    break;
-            }*/
-
 
         }else{
             //emit newFrame(&objectsEmpty);
@@ -161,7 +101,7 @@ void DeviceAcquisitionTcpServer::onSocketReadyRead()
         mListMessage.append(message);
         mMutexList.unlock();
 
-        qDebug("-> %s", jsonDoc.toStdString().c_str());
+        //qDebug("-> %s", jsonDoc.toStdString().c_str());
     }
 
 }

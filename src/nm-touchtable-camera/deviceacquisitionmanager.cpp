@@ -20,8 +20,8 @@ DeviceAcquisitionManager::DeviceAcquisitionManager(int argc, char *argv[])
     mTcpClient.connectToHost(serverIp, 20140);
     mTcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
-    mDeviceAcquisition = new DeviceAcquisitionDemo();
-    //mDeviceAcquisition = new DeviceAcquisitionCamera(false);
+    //mDeviceAcquisition = new DeviceAcquisitionDemo();
+    mDeviceAcquisition = new DeviceAcquisitionCamera(false);
 
     connect(mDeviceAcquisition, &DeviceAcquisition::touchPress, this, &DeviceAcquisitionManager::onTouchPress);
     connect(mDeviceAcquisition, &DeviceAcquisition::touchMove, this, &DeviceAcquisitionManager::onTouchMove);
@@ -81,7 +81,7 @@ void DeviceAcquisitionManager::sendDataToServer(QString data)
     QString dataAndSeparator;
     dataAndSeparator = QString("%1*").arg(data);
     qint64 returnValue = mTcpClient.write(dataAndSeparator.toStdString().c_str());
-    qDebug() << qPrintable(dataAndSeparator) << " (" << returnValue << "/" << dataAndSeparator.size() << ")";
+    //qDebug() << qPrintable(dataAndSeparator) << " (" << returnValue << "/" << dataAndSeparator.size() << ")";
     mMessageId++;
 
 }
