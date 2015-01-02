@@ -24,6 +24,9 @@ protected:
     QTcpSocket mTcpClient;
     int mMessageId;
 
+    float mRatioX;
+    float mRatioY;
+
 public slots:
     void onTouchPress(int x, int y);
     void onTouchMove(int x, int y);

@@ -6,18 +6,18 @@ DeviceAcquisitionDemo::DeviceAcquisitionDemo(QObject *parent) :
     DeviceAcquisition(parent)
 {
     mMode = 0;
-    objects = vector<Rect>(3);
+    objects = vector<Rect>(1);
 }
 
 
 void DeviceAcquisitionDemo::run()
 {
-    int step = 10;
+    int step = 5;
 
-    int minX = 200;
-    int minY = 200;
-    int maxX = 500;
-    int maxY = 500;
+    int minX = 50;
+    int minY = 50;
+    int maxX = 150;
+    int maxY = 150;
 
     mTouchX = minX;
     mTouchY = minY;
@@ -67,16 +67,10 @@ void DeviceAcquisitionDemo::run()
         objects[0].x = mTouchX;
         objects[0].y = mTouchY;
 
-        objects[1].x = (mTouchX + 300) / 4.0f;
-        objects[1].y = (mTouchY) / 3.33f;
-
-        objects[2].x = (mTouchX + 600) / 4.0f;
-        objects[2].y = (mTouchY) / 3.33f;
-
         emit touchMove(mTouchX, mTouchY);
         emit newFrame(&objects);
 
-        msleep(10);
+        msleep(50);
     }
 
 }

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QMutex>
+#include <QDebug>
 
 #include "camera.h"
 #include "CustomImage.h"

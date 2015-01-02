@@ -8,9 +8,14 @@ DeviceAcquisitionManager::DeviceAcquisitionManager(int argc, char *argv[])
     }
 
     mMessageId = 0;
+    mRatioX = 1280.0f / 320.0f;
+    mRatioY = 800.0f / 240.0f;
 
-    // tower-linux
-    QString serverIp = "192.168.1.21";
+    // Tower
+    //QString serverIp = "192.168.1.21";
+
+    // Raspberry (nm-touchable-display)
+    QString serverIp = "192.168.1.108";
 
     mTcpClient.connectToHost(serverIp, 20140);
     mTcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -23,6 +28,7 @@ DeviceAcquisitionManager::DeviceAcquisitionManager(int argc, char *argv[])
     connect(mDeviceAcquisition, &DeviceAcquisition::touchRelease, this, &DeviceAcquisitionManager::onTouchRelease);
     connect(mDeviceAcquisition, &DeviceAcquisition::newFrame, this, &DeviceAcquisitionManager::onNewFrame);
     mDeviceAcquisition->start();
+
 }
 
 void DeviceAcquisitionManager::onTouchPress(int x, int y)
@@ -44,36 +50,6 @@ void DeviceAcquisitionManager::onNewFrame(vector<Rect>* objects)
 {
     //qDebug() << "onNewFrame";
 
-    /*
-    for (int i = 0; i < objects->size(); ++i) {
-        Rect objectBounds = objects->at(i);
-        qDebug() << QString("[%1] %2 x %3").arg(i).arg(objectBounds.x).arg(objectBounds.y);
-    }
-    */
-
-    /*
-    if (objects->size() > 0){
-        Rect objectBounds = objects->at(0);
-
-        DeviceMessage deviceMessage;
-        deviceMessage.id = mMessageId;
-        deviceMessage.state = 2;
-        deviceMessage.x = objectBounds.x;
-        deviceMessage.y = objectBounds.y;
-
-        sendDataToServer(deviceMessage.serializeToJson());
-    }else{
-
-        DeviceMessage deviceMessage;
-        deviceMessage.id = mMessageId;
-        deviceMessage.state = 3;
-        deviceMessage.x = 0;
-        deviceMessage.y = 0;
-
-        sendDataToServer(deviceMessage.serializeToJson());
-    }
-    */
-
     DeviceMessage deviceMessage;
     deviceMessage.id = mMessageId;
 
@@ -90,7 +66,8 @@ void DeviceAcquisitionManager::onNewFrame(vector<Rect>* objects)
     }
 
 
-    qDebug() << deviceMessage.serializeToJson();
+    //qDebug() << deviceMessage.serializeToJson();
+    sendDataToServer(deviceMessage.serializeToJson());
 }
 
 void DeviceAcquisitionManager::onConnected()
@@ -101,7 +78,10 @@ void DeviceAcquisitionManager::onConnected()
 
 void DeviceAcquisitionManager::sendDataToServer(QString data)
 {
-    qint64 returnValue = mTcpClient.write(data.toStdString().c_str());
-    qDebug() << qPrintable(data) << " (" << returnValue << "/" << data.size() << ")";
+    QString dataAndSeparator;
+    dataAndSeparator = QString("%1*").arg(data);
+    qint64 returnValue = mTcpClient.write(dataAndSeparator.toStdString().c_str());
+    qDebug() << qPrintable(dataAndSeparator) << " (" << returnValue << "/" << dataAndSeparator.size() << ")";
     mMessageId++;
+
 }

@@ -63,8 +63,8 @@ void DeviceAcquisitionTcpServer::run()
 
             for (int i = 0; i < message.objects.length(); ++i) {
                 DeviceMessageObject messageObject = message.objects.at(i);
-                objects[i].x = messageObject.x / 4.0f;
-                objects[i].y = messageObject.y / 3.33f;
+                objects[i].x = messageObject.x;
+                objects[i].y = messageObject.y;
                 objects[i].width = messageObject.width;
                 objects[i].height = messageObject.height;
             }
@@ -150,21 +150,10 @@ void DeviceAcquisitionTcpServer::onSocketReadyRead()
     //qDebug("onSocketReadyRead()");
     QByteArray data = mTcpSocket->readAll();
     QString jsonDoc = QString(data);
-    qDebug() << jsonDoc;
-    /*
-    QString jsonDoc = QString(data);
-    qDebug() << jsonDoc;
-    DeviceMessage message(jsonDoc);
-
-    mMutexList.lock();
-    mListMessage.append(message);
-    mMutexList.unlock()
-    */
-
+    //qDebug() << jsonDoc;
 
     QStringList jsonDocList = QString(data).split('*', QString::SkipEmptyParts);
     foreach (QString jsonDoc, jsonDocList) {
-        //jsonDoc += "}"; // append the '}' used as separator
 
         DeviceMessage message(jsonDoc);
 
