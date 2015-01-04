@@ -1,5 +1,10 @@
 raspberry-touchtable
 ====================
+A touchtable based on 2 Raspberry Pi and Qt5
+
+
+![alt tag](https://github.com/neuronalmotion/raspberry-touchtable/raw/master/img/20150104_nmtouchtable-finger.png)
+
 
 # Getting started
 
