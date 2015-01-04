@@ -7,9 +7,10 @@ A touchtable based on Raspberry Pi and Qt5
 
 The coffee table is composed of:
 * x2 Raspberry Pi
+* x4 infra-red projectors
 * A camera (connected to the first Raspberry Pi "sensor") 
 * A videoprojector (connected to the second Raspberry Pi "display")
-* x4 infra-red projectors
+
 
 # Getting started
 
