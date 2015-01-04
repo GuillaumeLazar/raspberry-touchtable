@@ -1,6 +1,19 @@
 raspberry-touchtable
 ====================
 
+# Getting started
+
+Thanks to Qt, this project can be test on a simple desktop computer. You will only start "nm-touchtable" (display) and "DeviceAcquisitionTcpClient" (dummy sensor) on the same computer.
+
+1. install Qt5 and QtCreator
+2. install opencv2 (>= 5.3)
+3. git clone this repo
+4. compile and start "nm-touchtable"
+  * It's should display a black window of 1280x800 (simulate the touchtable videoprojector screen)
+5. compile and start "DeviceAcquisitionTcpClient"
+  * It's should display a gray window of 320x240 (simulating the camera sensor)
+6. Click and move your cursor on the small gray window, visual effect should be visibled on the big black window
+
 # Softwares
 
 ## nm-touchtable
@@ -24,7 +37,7 @@ For each camera frame, a json message is sent to the server (aka "nm-touchtable"
 
 ## DeviceAcquisitionTcpClient
 
-A desktop application that allow to send information to "nm-touchtable" using a mouse (instead of a camera like with "nm-touchtable-camera"). The application display a 320x240 window (it's a fixed sensor area).
+A desktop application that allow to send information to "nm-touchtable" using a simple mouse (instead of a camera like with "nm-touchtable-camera"). The application display a 320x240 window (it's a fixed sensor area).
 each time the user press, move or release the mouse cursor into this window, a json message is sent to the server.
 
 ## Json message
@@ -43,5 +56,3 @@ objects: array with all detected object (empty if no object)
 state: (WIP) unknown, press, move, release
 x, y, width, height: objects information into an sensor area of dimension 320x240
 ```
-
-
