@@ -1,6 +1,6 @@
 raspberry-touchtable
 ====================
-A touchtable based on 2 Raspberry Pi and Qt5
+A touchtable based on Raspberry Pi and Qt5
 
 
 ![alt tag](https://github.com/neuronalmotion/raspberry-touchtable/raw/master/img/20150104_nmtouchtable-finger.png)
@@ -14,9 +14,11 @@ Thanks to Qt, this project can be test on a simple desktop computer. You will on
 2. install opencv2 (>= 5.3)
 3. git clone this repo
 4. compile and start "nm-touchtable"
+  * The "Application output" tab will display the ip address and port used by the server.
   * It's should display a black window of 1280x800 (simulate the touchtable videoprojector screen)
-5. compile and start "DeviceAcquisitionTcpClient"
-  * It's should display a gray window of 320x240 (simulating the camera sensor)
+5. compile "DeviceAcquisitionTcpClient"
+  * Edit the server address ip on the "MainWindow.cpp" file
+  * It's should display a grey window of 320x240 (simulating the camera sensor)
 6. Click and move your cursor on the small gray window, visual effect should be visibled on the big black window
 
 # Softwares
