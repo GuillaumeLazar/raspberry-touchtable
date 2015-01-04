@@ -5,19 +5,26 @@ A touchtable based on Raspberry Pi and Qt5
 
 ![alt tag](https://github.com/neuronalmotion/raspberry-touchtable/raw/master/img/20150104_nmtouchtable-finger.png)
 
+The coffee table is composed of:
+* x2 Raspberry Pi
+* A camera (connected to the first Raspberry Pi "sensor") 
+* A videoprojector (connected to the second Raspberry Pi "display")
+* x4 infra-red projectors
 
 # Getting started
 
 Thanks to Qt, this project can be test on a simple desktop computer. You will only start "nm-touchtable" (display) and "DeviceAcquisitionTcpClient" (dummy sensor) on the same computer.
 
 1. install Qt5 and QtCreator
-2. install opencv2 (>= 5.3)
+2. install opencv2 (>= 2.3)
 3. git clone this repo
-4. compile and start "nm-touchtable"
+4. open the "nm-touchtable" Qt project 
+  * Build and start it
   * The "Application output" tab will display the ip address and port used by the server.
   * It's should display a black window of 1280x800 (simulate the touchtable videoprojector screen)
-5. compile "DeviceAcquisitionTcpClient"
-  * Edit the server address ip on the "MainWindow.cpp" file
+5. open the "DeviceAcquisitionTcpClient" Qt project
+  * Edit the server ip address on the "MainWindow.cpp" file
+  * Build and start it
   * It's should display a grey window of 320x240 (simulating the camera sensor)
 6. Click and move your cursor on the small gray window, visual effect should be visibled on the big black window
 
